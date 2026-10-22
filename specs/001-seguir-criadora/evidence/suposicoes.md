@@ -35,3 +35,21 @@ Decisões tomadas sem perguntar, pela opção mais conservadora.
 10. A rota `followers/count` é declarada antes de `followers/:userId`; "count" nunca é tratado como userId.
 11. `engines`: `">=24 <25"`; `.nvmrc`: `24`.
 12. `pg` e `dotenv` são dependências de produção, porque `scripts/db.mjs` roda no container final.
+
+## Prompt 4 (tasks)
+
+1. As fases seguem as 4 fixadas no prompt (setup, API, página + E2E, documentação), e não uma fase por história como no template do Spec Kit. A fase da API entrega US1 e US3; a da página entrega US2.
+2. "NotImplementedError" não existe em JS/Nest; services e repositories do esqueleto usam `NotImplementedException` do `@nestjs/common`. Filtro e pipe do esqueleto são neutros (o filtro responde sempre 500 `INTERNAL_ERROR`, o pipe repassa o valor) e o DTO não tem decoradores, para o red falhar por asserção e não por setup. Infraestrutura sem regra (`main.ts`, `app.module.ts`, `database.module.ts`) já nasce funcional.
+3. A Fase 1 cria um `public/index.html` mínimo, para o estático ter raiz antes da Fase 3.
+4. O hash `evidence/tests.sha256` é conferido no início da Fase 3 (prova que `tests/` não mudou) e regerado depois do red E2E, cobrindo `tests/` e `e2e/`.
+5. A tarefa de ADRs da Fase 4 é revisão e ajuste, porque os ADRs já foram escritos no Prompt 3; o developer é o dono de `README.md` e `docs/adr/`, como fixa AGENTS.md.
+6. Os testes E2E reaproveitam o reset de `tests/helpers/database.ts`; ambos são do qa-guardian.
+7. A tabela de cobertura FR → tarefas fica em `tasks.md`; o `npm run verify` final e o `evidence/verify.txt` ficam com a sessão principal no Prompt 5.
+8. O subagente `reviewer` não estava carregado na sessão (os subagentes foram criados no Prompt 1, depois do último reinício do Claude Code). A auditoria foi feita por um agente genérico com o modelo opus, recebendo literalmente as instruções de `.claude/agents/reviewer.md` e restrito a ferramentas de leitura.
+9. `AppModule` registra o `ValidationPipe` e o filtro com `APP_PIPE` e `APP_FILTER`, para que a app dos testes de integração (criada a partir do `AppModule`) os tenha sem repetir configuração.
+10. Se `renderPath: '/'` não bastar para o `ServeStaticModule` deixar rota desconhecida cair em 404 `NOT_FOUND`, o developer usa a opção equivalente da biblioteca e registra a escolha aqui.
+11. Depois de `'missingReference'`, se `findExistence` mostrar criadora e usuário existentes (registro recriado entre os dois comandos), o service lança `CreatorNotFoundError`, a opção mais conservadora (a criadora é verificada primeiro). A mesma resposta vale quando `countFollowers` devolve `null` após o INSERT.
+12. FR-012 "durante a operação": a remoção entre o INSERT e a contagem não é reproduzível de forma determinística por HTTP; é coberta por teste unitário com repository falso, e a remoção anterior à operação, por integração.
+13. O `ValidationPipe` global usa `transform: false`: com `transform: true` ele converte o parâmetro de rota (`"1e3"` vira 1000) antes do `PositiveIntPipe`, que então aceitaria ids fora do contrato. O corpo continua validado, só não vira instância do DTO.
+14. O hash dos testes cobre também `jest.unit.config.ts`, `jest.int.config.ts` e `playwright.config.ts`, e a validação compara a lista de arquivos, para que arquivo novo em `tests/` ou `e2e/` ou mudança nos configs seja detectada.
+15. A revisão [REV] de cada fase lê os arquivos da fase (`git status --porcelain --untracked-files=all`), porque não há commit entre as fases, e não roda o E2E para não sobrescrever os screenshots de evidência.
