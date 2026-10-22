@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Seguir criadora</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="card">
+      <p id="loading">Carregando…</p>
+      <div id="content" hidden>
+        <div class="field">
+          <label for="user-select">Você é</label>
+          <select id="user-select"></select>
+        </div>
+        <div class="creator">
+          <div id="avatar" class="avatar" aria-hidden="true"></div>
+          <h1 id="creator-name"></h1>
+          <p id="follower-count" class="count" aria-live="polite"></p>
+        </div>
+        <button
+          id="follow-button"
+          class="follow"
+          type="button"
+          aria-pressed="false"
+        >
+          Seguir
+        </button>
+      </div>
+      <p id="error" role="alert"></p>
+    </main>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

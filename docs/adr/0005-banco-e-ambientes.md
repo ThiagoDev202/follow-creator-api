@@ -15,11 +15,15 @@ banco usado pela aplicação, e a API e o banco rodam no Docker Compose.
 - `scripts/db.mjs setup` aplica schema e seed; o container da API roda isso antes de subir.
 - Banco de teste separado, `seguir_criadora_test`, criado por `db/init/01-test-db.sql` na primeira inicialização do volume.
 - `scripts/db.mjs rebuild` apaga e recria as tabelas e só aceita `--test`, sempre em `DATABASE_URL_TEST`. Os testes abortam se `DATABASE_URL_TEST` faltar ou for igual a `DATABASE_URL`.
+- `scripts/db.mjs` valida a URL de teste antes de qualquer comando: ela precisa existir, ser diferente de `DATABASE_URL` e apontar para um banco cujo nome termina em `_test`; senão o script sai com erro sem conectar.
+- `Dockerfile` em dois estágios (build e runtime só com dependências de produção), com `USER node` no estágio final: a API não roda como root dentro do container.
 - Portas: Postgres em 5433 no host (para não colidir com um Postgres local em 5432); API em 3000; servidor dos testes E2E em 3100 (para não colidir com a API do compose).
 
 ## Alternativas
 
 - **Ferramenta de migrations** (node-pg-migrate, Flyway): justificável com esquema que evolui; aqui é um esquema fixo.
+- **Rebuild sem proteção de nome e URL**: um `.env` errado apagaria as tabelas da aplicação.
+- **Container como root**: é o padrão da imagem, mas dá privilégio desnecessário; `USER node` custa uma linha.
 - **Mesmo banco para app e testes**: os testes apagariam dados da aplicação.
 - **Seed sem `setval`**: a próxima inserção sem id colidiria com o id 1.
 
@@ -27,4 +31,5 @@ banco usado pela aplicação, e a API e o banco rodam no Docker Compose.
 
 - Subir do zero e rodar de novo dão o mesmo resultado.
 - Mudança de esquema exige editar `schema.sql` e recriar o banco; não há histórico de versões do esquema.
-- O rebuild nunca atinge o banco da aplicação.
+- O rebuild nunca atinge o banco da aplicação: sem `--test`, com URL igual à da aplicação ou com nome fora do padrão `_test`, ele aborta.
+- Os testes (`tests/helpers/global-setup.ts` e `e2e/global-setup.ts`) chamam o `rebuild --test` antes de rodar.

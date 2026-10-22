@@ -1,0 +1,2311 @@
+# Red da Fase 2 (API) - 2026-10-22T18:34:34-03:00
+
+## npm run test:unit
+
+
+> follow-creator-api@0.0.1 test:unit
+> jest -c jest.unit.config.ts
+
+FAIL tests/unit/followers.service.spec.ts
+  ● FollowersService › follow › FR-001: cria a relação e informa criação com a contagem atual
+
+    expect(received).resolves.toEqual()
+
+    Received promise rejected instead of resolved
+    Rejected to value: [NotImplementedException: Not Implemented]
+
+      27 |   describe('follow', () => {
+      28 |     it('FR-001: cria a relação e informa criação com a contagem atual', async () => {
+    > 29 |       await expect(settle(() => service.follow(1, 1))).resolves.toEqual({
+         |             ^
+      30 |         created: true,
+      31 |         count: 1,
+      32 |       });
+
+      at expect (node_modules/expect/build/index.js:2116:15)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:29:13)
+
+  ● FollowersService › follow › FR-002: seguir de novo informa que a relação já existia e mantém a contagem
+
+    expect(received).resolves.toEqual()
+
+    Received promise rejected instead of resolved
+    Rejected to value: [NotImplementedException: Not Implemented]
+
+      36 |     it('FR-002: seguir de novo informa que a relação já existia e mantém a contagem', async () => {
+      37 |       repository.follow(1, 1);
+    > 38 |       await expect(settle(() => service.follow(1, 1))).resolves.toEqual({
+         |             ^
+      39 |         created: false,
+      40 |         count: 1,
+      41 |       });
+
+      at expect (node_modules/expect/build/index.js:2116:15)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:38:13)
+
+  ● FollowersService › follow › FR-008: a contagem devolvida é numérica e igual ao número real de seguidores
+
+    expect(received).resolves.toStrictEqual()
+
+    Received promise rejected instead of resolved
+    Rejected to value: [NotImplementedException: Not Implemented]
+
+      46 |       repository.follow(1, 2);
+      47 |       repository.follow(2, 3);
+    > 48 |       await expect(settle(() => service.follow(1, 1))).resolves.toStrictEqual({
+         |             ^
+      49 |         created: true,
+      50 |         count: 2,
+      51 |       });
+
+      at expect (node_modules/expect/build/index.js:2116:15)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:48:13)
+
+  ● FollowersService › follow › FR-009: criadora inexistente lança CreatorNotFoundError e nada é gravado
+
+    expect(received).rejects.toBeInstanceOf(expected)
+
+    Expected constructor: CreatorNotFoundError
+    Received constructor: NotImplementedException
+
+      53 |
+      54 |     it('FR-009: criadora inexistente lança CreatorNotFoundError e nada é gravado', async () => {
+    > 55 |       await expect(settle(() => service.follow(999, 1))).rejects.toBeInstanceOf(
+         |                                                                  ^
+      56 |         CreatorNotFoundError,
+      57 |       );
+      58 |       expect(repository.follows.size).toBe(0);
+
+      at Object.toBeInstanceOf (node_modules/expect/build/index.js:2155:20)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:55:66)
+
+  ● FollowersService › follow › FR-010: usuário inexistente lança UserNotFoundError e nada é gravado
+
+    expect(received).rejects.toBeInstanceOf(expected)
+
+    Expected constructor: UserNotFoundError
+    Received constructor: NotImplementedException
+
+      60 |
+      61 |     it('FR-010: usuário inexistente lança UserNotFoundError e nada é gravado', async () => {
+    > 62 |       await expect(settle(() => service.follow(1, 999))).rejects.toBeInstanceOf(
+         |                                                                  ^
+      63 |         UserNotFoundError,
+      64 |       );
+      65 |       expect(repository.follows.size).toBe(0);
+
+      at Object.toBeInstanceOf (node_modules/expect/build/index.js:2155:20)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:62:66)
+
+  ● FollowersService › follow › FR-011: criadora e usuário inexistentes lança CreatorNotFoundError
+
+    expect(received).rejects.toBeInstanceOf(expected)
+
+    Expected constructor: CreatorNotFoundError
+    Received constructor: NotImplementedException
+
+      69 |       await expect(
+      70 |         settle(() => service.follow(999, 999)),
+    > 71 |       ).rejects.toBeInstanceOf(CreatorNotFoundError);
+         |                 ^
+      72 |     });
+      73 |
+      74 |     it('FR-012: usuário removido antes do registro da relação lança UserNotFoundError', async () => {
+
+      at Object.toBeInstanceOf (node_modules/expect/build/index.js:2155:20)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:71:17)
+
+  ● FollowersService › follow › FR-012: usuário removido antes do registro da relação lança UserNotFoundError
+
+    expect(received).rejects.toBeInstanceOf(expected)
+
+    Expected constructor: UserNotFoundError
+    Received constructor: NotImplementedException
+
+      76 |         repository.users.delete(3);
+      77 |       };
+    > 78 |       await expect(settle(() => service.follow(1, 3))).rejects.toBeInstanceOf(
+         |                                                                ^
+      79 |         UserNotFoundError,
+      80 |       );
+      81 |       expect(repository.follows.size).toBe(0);
+
+      at Object.toBeInstanceOf (node_modules/expect/build/index.js:2155:20)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:78:64)
+
+  ● FollowersService › follow › FR-012: criadora removida entre o registro e a contagem lança CreatorNotFoundError
+
+    expect(received).rejects.toBeInstanceOf(expected)
+
+    Expected constructor: CreatorNotFoundError
+    Received constructor: NotImplementedException
+
+      86 |         repository.creators.delete(2);
+      87 |       };
+    > 88 |       await expect(settle(() => service.follow(2, 1))).rejects.toBeInstanceOf(
+         |                                                                ^
+      89 |         CreatorNotFoundError,
+      90 |       );
+      91 |     });
+
+      at Object.toBeInstanceOf (node_modules/expect/build/index.js:2155:20)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:88:64)
+
+  ● FollowersService › follow › FR-012: referência ausente no registro com criadora e usuário existentes depois lança CreatorNotFoundError
+
+    expect(received).rejects.toBeInstanceOf(expected)
+
+    Expected constructor: CreatorNotFoundError
+    Received constructor: NotImplementedException
+
+      93 |     it('FR-012: referência ausente no registro com criadora e usuário existentes depois lança CreatorNotFoundError', async () => {
+      94 |       repository.forcedInsertResult = 'missingReference';
+    > 95 |       await expect(settle(() => service.follow(1, 1))).rejects.toBeInstanceOf(
+         |                                                                ^
+      96 |         CreatorNotFoundError,
+      97 |       );
+      98 |     });
+
+      at Object.toBeInstanceOf (node_modules/expect/build/index.js:2155:20)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:95:64)
+
+  ● FollowersService › unfollow › FR-003: remove a relação existente e confirma
+
+    expect(received).resolves.toBeUndefined()
+
+    Received promise rejected instead of resolved
+    Rejected to value: [NotImplementedException: Not Implemented]
+
+      103 |       repository.follow(1, 1);
+      104 |       repository.follow(1, 2);
+    > 105 |       await expect(
+          |             ^
+      106 |         settle(() => service.unfollow(1, 1)),
+      107 |       ).resolves.toBeUndefined();
+      108 |       expect(repository.isStored(1, 1)).toBe(false);
+
+      at expect (node_modules/expect/build/index.js:2116:15)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:105:13)
+
+  ● FollowersService › unfollow › FR-004: confirma da mesma forma para quem não seguia e nada muda
+
+    expect(received).resolves.toBeUndefined()
+
+    Received promise rejected instead of resolved
+    Rejected to value: [NotImplementedException: Not Implemented]
+
+      112 |     it('FR-004: confirma da mesma forma para quem não seguia e nada muda', async () => {
+      113 |       repository.follow(1, 2);
+    > 114 |       await expect(
+          |             ^
+      115 |         settle(() => service.unfollow(1, 1)),
+      116 |       ).resolves.toBeUndefined();
+      117 |       expect([...repository.follows]).toEqual(['1:2']);
+
+      at expect (node_modules/expect/build/index.js:2116:15)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:114:13)
+
+  ● FollowersService › unfollow › FR-009: criadora inexistente lança CreatorNotFoundError
+
+    expect(received).rejects.toBeInstanceOf(expected)
+
+    Expected constructor: CreatorNotFoundError
+    Received constructor: NotImplementedException
+
+      121 |       await expect(
+      122 |         settle(() => service.unfollow(999, 1)),
+    > 123 |       ).rejects.toBeInstanceOf(CreatorNotFoundError);
+          |                 ^
+      124 |     });
+      125 |
+      126 |     it('FR-010: usuário inexistente lança UserNotFoundError', async () => {
+
+      at Object.toBeInstanceOf (node_modules/expect/build/index.js:2155:20)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:123:17)
+
+  ● FollowersService › unfollow › FR-010: usuário inexistente lança UserNotFoundError
+
+    expect(received).rejects.toBeInstanceOf(expected)
+
+    Expected constructor: UserNotFoundError
+    Received constructor: NotImplementedException
+
+      127 |       await expect(
+      128 |         settle(() => service.unfollow(1, 999)),
+    > 129 |       ).rejects.toBeInstanceOf(UserNotFoundError);
+          |                 ^
+      130 |     });
+      131 |
+      132 |     it('FR-011: criadora e usuário inexistentes lança CreatorNotFoundError', async () => {
+
+      at Object.toBeInstanceOf (node_modules/expect/build/index.js:2155:20)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:129:17)
+
+  ● FollowersService › unfollow › FR-011: criadora e usuário inexistentes lança CreatorNotFoundError
+
+    expect(received).rejects.toBeInstanceOf(expected)
+
+    Expected constructor: CreatorNotFoundError
+    Received constructor: NotImplementedException
+
+      133 |       await expect(
+      134 |         settle(() => service.unfollow(999, 999)),
+    > 135 |       ).rejects.toBeInstanceOf(CreatorNotFoundError);
+          |                 ^
+      136 |     });
+      137 |   });
+      138 |
+
+      at Object.toBeInstanceOf (node_modules/expect/build/index.js:2155:20)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:135:17)
+
+  ● FollowersService › getCount › FR-008: devolve o número real de seguidores da criadora
+
+    expect(received).resolves.toBe()
+
+    Received promise rejected instead of resolved
+    Rejected to value: [NotImplementedException: Not Implemented]
+
+      142 |       repository.follow(1, 2);
+      143 |       repository.follow(2, 3);
+    > 144 |       await expect(settle(() => service.getCount(1))).resolves.toBe(2);
+          |             ^
+      145 |     });
+      146 |
+      147 |     it('FR-009: contagem nula lança CreatorNotFoundError', async () => {
+
+      at expect (node_modules/expect/build/index.js:2116:15)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:144:13)
+
+  ● FollowersService › getCount › FR-009: contagem nula lança CreatorNotFoundError
+
+    expect(received).rejects.toBeInstanceOf(expected)
+
+    Expected constructor: CreatorNotFoundError
+    Received constructor: NotImplementedException
+
+      146 |
+      147 |     it('FR-009: contagem nula lança CreatorNotFoundError', async () => {
+    > 148 |       await expect(settle(() => service.getCount(999))).rejects.toBeInstanceOf(
+          |                                                                 ^
+      149 |         CreatorNotFoundError,
+      150 |       );
+      151 |     });
+
+      at Object.toBeInstanceOf (node_modules/expect/build/index.js:2155:20)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:148:65)
+
+  ● FollowersService › getStatus › FR-017: informa que segue para quem segue e que não segue para quem não segue
+
+    expect(received).resolves.toBe()
+
+    Received promise rejected instead of resolved
+    Rejected to value: [NotImplementedException: Not Implemented]
+
+      155 |     it('FR-017: informa que segue para quem segue e que não segue para quem não segue', async () => {
+      156 |       repository.follow(1, 1);
+    > 157 |       await expect(settle(() => service.getStatus(1, 1))).resolves.toBe(true);
+          |             ^
+      158 |       await expect(settle(() => service.getStatus(1, 2))).resolves.toBe(false);
+      159 |     });
+      160 |
+
+      at expect (node_modules/expect/build/index.js:2116:15)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:157:13)
+
+  ● FollowersService › getStatus › FR-009: criadora inexistente lança CreatorNotFoundError
+
+    expect(received).rejects.toBeInstanceOf(expected)
+
+    Expected constructor: CreatorNotFoundError
+    Received constructor: NotImplementedException
+
+      162 |       await expect(
+      163 |         settle(() => service.getStatus(999, 1)),
+    > 164 |       ).rejects.toBeInstanceOf(CreatorNotFoundError);
+          |                 ^
+      165 |     });
+      166 |
+      167 |     it('FR-010: usuário inexistente lança UserNotFoundError', async () => {
+
+      at Object.toBeInstanceOf (node_modules/expect/build/index.js:2155:20)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:164:17)
+
+  ● FollowersService › getStatus › FR-010: usuário inexistente lança UserNotFoundError
+
+    expect(received).rejects.toBeInstanceOf(expected)
+
+    Expected constructor: UserNotFoundError
+    Received constructor: NotImplementedException
+
+      168 |       await expect(
+      169 |         settle(() => service.getStatus(1, 999)),
+    > 170 |       ).rejects.toBeInstanceOf(UserNotFoundError);
+          |                 ^
+      171 |     });
+      172 |
+      173 |     it('FR-011: criadora e usuário inexistentes lança CreatorNotFoundError', async () => {
+
+      at Object.toBeInstanceOf (node_modules/expect/build/index.js:2155:20)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:170:17)
+
+  ● FollowersService › getStatus › FR-011: criadora e usuário inexistentes lança CreatorNotFoundError
+
+    expect(received).rejects.toBeInstanceOf(expected)
+
+    Expected constructor: CreatorNotFoundError
+    Received constructor: NotImplementedException
+
+      174 |       await expect(
+      175 |         settle(() => service.getStatus(999, 999)),
+    > 176 |       ).rejects.toBeInstanceOf(CreatorNotFoundError);
+          |                 ^
+      177 |     });
+      178 |   });
+      179 | });
+
+      at Object.toBeInstanceOf (node_modules/expect/build/index.js:2155:20)
+      at Object.<anonymous> (tests/unit/followers.service.spec.ts:176:17)
+
+Test Suites: 1 failed, 1 total
+Tests:       20 failed, 20 total
+Snapshots:   0 total
+Time:        0.357 s, estimated 1 s
+Ran all test suites.
+
+## npm run test:int
+
+
+> follow-creator-api@0.0.1 test:int
+> jest -c jest.int.config.ts --runInBand
+
+Test database rebuilt.
+FAIL tests/integration/not-found.spec.ts
+  ● referências inexistentes › criadora 999 inexistente › FR-009 FR-015: POST /creators/999/followers responde 404 CREATOR_NOT_FOUND em português e nada é gravado
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+      38 |         .send({ userId: 1 });
+      39 |
+    > 40 |       expect(response.status).toBe(404);
+         |                               ^
+      41 |       expect(response.body).toStrictEqual(creatorNotFound);
+      42 |       await expect(countFollowRows()).resolves.toBe(0);
+      43 |     });
+
+      at Object.<anonymous> (tests/integration/not-found.spec.ts:40:31)
+
+  ● referências inexistentes › criadora 999 inexistente › FR-009 FR-015: DELETE /creators/999/followers/1 responde 404 CREATOR_NOT_FOUND em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+      48 |       );
+      49 |
+    > 50 |       expect(response.status).toBe(404);
+         |                               ^
+      51 |       expect(response.body).toStrictEqual(creatorNotFound);
+      52 |     });
+      53 |
+
+      at Object.<anonymous> (tests/integration/not-found.spec.ts:50:31)
+
+  ● referências inexistentes › criadora 999 inexistente › FR-009 FR-015: GET /creators/999/followers/count responde 404 CREATOR_NOT_FOUND em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+      57 |       );
+      58 |
+    > 59 |       expect(response.status).toBe(404);
+         |                               ^
+      60 |       expect(response.body).toStrictEqual(creatorNotFound);
+      61 |     });
+      62 |
+
+      at Object.<anonymous> (tests/integration/not-found.spec.ts:59:31)
+
+  ● referências inexistentes › criadora 999 inexistente › FR-009 FR-015: GET /creators/999/followers/1 responde 404 CREATOR_NOT_FOUND em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+      66 |       );
+      67 |
+    > 68 |       expect(response.status).toBe(404);
+         |                               ^
+      69 |       expect(response.body).toStrictEqual(creatorNotFound);
+      70 |     });
+      71 |
+
+      at Object.<anonymous> (tests/integration/not-found.spec.ts:68:31)
+
+  ● referências inexistentes › criadora 999 inexistente › FR-009 FR-015: GET /creators/999 responde 404 CREATOR_NOT_FOUND em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+      73 |       const response = await request(running.url).get('/creators/999');
+      74 |
+    > 75 |       expect(response.status).toBe(404);
+         |                               ^
+      76 |       expect(response.body).toStrictEqual(creatorNotFound);
+      77 |     });
+      78 |   });
+
+      at Object.<anonymous> (tests/integration/not-found.spec.ts:75:31)
+
+  ● referências inexistentes › usuário 999 inexistente › FR-010 FR-015: POST /creators/1/followers com userId 999 responde 404 USER_NOT_FOUND em português e nada é gravado
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+      84 |         .send({ userId: 999 });
+      85 |
+    > 86 |       expect(response.status).toBe(404);
+         |                               ^
+      87 |       expect(response.body).toStrictEqual(userNotFound);
+      88 |       await expect(countFollowRows()).resolves.toBe(0);
+      89 |     });
+
+      at Object.<anonymous> (tests/integration/not-found.spec.ts:86:31)
+
+  ● referências inexistentes › usuário 999 inexistente › FR-010 FR-015: DELETE /creators/1/followers/999 responde 404 USER_NOT_FOUND em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+      94 |       );
+      95 |
+    > 96 |       expect(response.status).toBe(404);
+         |                               ^
+      97 |       expect(response.body).toStrictEqual(userNotFound);
+      98 |     });
+      99 |
+
+      at Object.<anonymous> (tests/integration/not-found.spec.ts:96:31)
+
+  ● referências inexistentes › usuário 999 inexistente › FR-010 FR-015: GET /creators/1/followers/999 responde 404 USER_NOT_FOUND em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+      103 |       );
+      104 |
+    > 105 |       expect(response.status).toBe(404);
+          |                               ^
+      106 |       expect(response.body).toStrictEqual(userNotFound);
+      107 |     });
+      108 |   });
+
+      at Object.<anonymous> (tests/integration/not-found.spec.ts:105:31)
+
+  ● referências inexistentes › criadora 999 e usuário 999 inexistentes › FR-011 FR-015: POST responde 404 CREATOR_NOT_FOUND
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+      114 |         .send({ userId: 999 });
+      115 |
+    > 116 |       expect(response.status).toBe(404);
+          |                               ^
+      117 |       expect(response.body).toStrictEqual(creatorNotFound);
+      118 |     });
+      119 |
+
+      at Object.<anonymous> (tests/integration/not-found.spec.ts:116:31)
+
+  ● referências inexistentes › criadora 999 e usuário 999 inexistentes › FR-011 FR-015: DELETE responde 404 CREATOR_NOT_FOUND
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+      123 |       );
+      124 |
+    > 125 |       expect(response.status).toBe(404);
+          |                               ^
+      126 |       expect(response.body).toStrictEqual(creatorNotFound);
+      127 |     });
+      128 |
+
+      at Object.<anonymous> (tests/integration/not-found.spec.ts:125:31)
+
+  ● referências inexistentes › criadora 999 e usuário 999 inexistentes › FR-011 FR-015: GET de "segue?" responde 404 CREATOR_NOT_FOUND
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+      132 |       );
+      133 |
+    > 134 |       expect(response.status).toBe(404);
+          |                               ^
+      135 |       expect(response.body).toStrictEqual(creatorNotFound);
+      136 |     });
+      137 |   });
+
+      at Object.<anonymous> (tests/integration/not-found.spec.ts:134:31)
+
+  ● referências inexistentes › registro removido do banco antes da operação › FR-012 FR-015: seguir com usuário removido responde 404 USER_NOT_FOUND e nada é gravado
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+      146 |         .send({ userId: 4 });
+      147 |
+    > 148 |       expect(response.status).toBe(404);
+          |                               ^
+      149 |       expect(response.body).toStrictEqual(userNotFound);
+      150 |       await expect(countFollowRows()).resolves.toBe(0);
+      151 |     });
+
+      at Object.<anonymous> (tests/integration/not-found.spec.ts:148:31)
+
+  ● referências inexistentes › registro removido do banco antes da operação › FR-012 FR-015: seguir criadora removida responde 404 CREATOR_NOT_FOUND e nada é gravado
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+      158 |         .send({ userId: 1 });
+      159 |
+    > 160 |       expect(response.status).toBe(404);
+          |                               ^
+      161 |       expect(response.body).toStrictEqual(creatorNotFound);
+      162 |       await expect(countFollowRows()).resolves.toBe(0);
+      163 |     });
+
+      at Object.<anonymous> (tests/integration/not-found.spec.ts:160:31)
+
+  ● referências inexistentes › registro removido do banco antes da operação › FR-012 FR-015: deixar de seguir com usuário removido responde 404 USER_NOT_FOUND
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+      173 |       );
+      174 |
+    > 175 |       expect(response.status).toBe(404);
+          |                               ^
+      176 |       expect(response.body).toStrictEqual(userNotFound);
+      177 |     });
+      178 |
+
+      at Object.<anonymous> (tests/integration/not-found.spec.ts:175:31)
+
+  ● referências inexistentes › registro removido do banco antes da operação › FR-012 FR-015: deixar de seguir criadora removida responde 404 CREATOR_NOT_FOUND
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+      187 |       );
+      188 |
+    > 189 |       expect(response.status).toBe(404);
+          |                               ^
+      190 |       expect(response.body).toStrictEqual(creatorNotFound);
+      191 |     });
+      192 |
+
+      at Object.<anonymous> (tests/integration/not-found.spec.ts:189:31)
+
+  ● referências inexistentes › registro removido do banco antes da operação › FR-012 FR-015: contagem de criadora removida responde 404 CREATOR_NOT_FOUND
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+      201 |       );
+      202 |
+    > 203 |       expect(response.status).toBe(404);
+          |                               ^
+      204 |       expect(response.body).toStrictEqual(creatorNotFound);
+      205 |     });
+      206 |   });
+
+      at Object.<anonymous> (tests/integration/not-found.spec.ts:203:31)
+
+FAIL tests/integration/validation.spec.ts
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em POST /creators/0/followers responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em POST /creators/-1/followers responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em POST /creators/abc/followers responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em POST /creators/1.5/followers responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em POST /creators/1e3/followers responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em POST /creators/0x10/followers responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em POST /creators/01/followers responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em POST /creators/2147483648/followers responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em DELETE /creators/0/followers/1 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em DELETE /creators/-1/followers/1 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em DELETE /creators/abc/followers/1 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em DELETE /creators/1.5/followers/1 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em DELETE /creators/1e3/followers/1 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em DELETE /creators/0x10/followers/1 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em DELETE /creators/01/followers/1 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em DELETE /creators/2147483648/followers/1 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/0/followers/count responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/-1/followers/count responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/abc/followers/count responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/1.5/followers/count responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/1e3/followers/count responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/0x10/followers/count responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/01/followers/count responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/2147483648/followers/count responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/0/followers/1 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/-1/followers/1 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/abc/followers/1 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/1.5/followers/1 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/1e3/followers/1 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/0x10/followers/1 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/01/followers/1 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/2147483648/followers/1 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/0 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/-1 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/abc responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/1.5 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/1e3 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/0x10 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/01 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: creatorId inválido em GET /creators/2147483648 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      75 |       const response = await send(method, path);
+      76 |
+    > 77 |       expect(response.status).toBe(400);
+         |                               ^
+      78 |       expect(response.body).toStrictEqual(validationError);
+      79 |       await expect(countFollowRows()).resolves.toBe(0);
+      80 |     },
+
+      at tests/integration/validation.spec.ts:77:31
+
+  ● entradas inválidas › FR-013 FR-015: userId inválido em DELETE /creators/1/followers/0 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      86 |       const response = await send(method, path);
+      87 |
+    > 88 |       expect(response.status).toBe(400);
+         |                               ^
+      89 |       expect(response.body).toStrictEqual(validationError);
+      90 |     },
+      91 |   );
+
+      at tests/integration/validation.spec.ts:88:31
+
+  ● entradas inválidas › FR-013 FR-015: userId inválido em DELETE /creators/1/followers/-1 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      86 |       const response = await send(method, path);
+      87 |
+    > 88 |       expect(response.status).toBe(400);
+         |                               ^
+      89 |       expect(response.body).toStrictEqual(validationError);
+      90 |     },
+      91 |   );
+
+      at tests/integration/validation.spec.ts:88:31
+
+  ● entradas inválidas › FR-013 FR-015: userId inválido em DELETE /creators/1/followers/abc responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      86 |       const response = await send(method, path);
+      87 |
+    > 88 |       expect(response.status).toBe(400);
+         |                               ^
+      89 |       expect(response.body).toStrictEqual(validationError);
+      90 |     },
+      91 |   );
+
+      at tests/integration/validation.spec.ts:88:31
+
+  ● entradas inválidas › FR-013 FR-015: userId inválido em DELETE /creators/1/followers/1.5 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      86 |       const response = await send(method, path);
+      87 |
+    > 88 |       expect(response.status).toBe(400);
+         |                               ^
+      89 |       expect(response.body).toStrictEqual(validationError);
+      90 |     },
+      91 |   );
+
+      at tests/integration/validation.spec.ts:88:31
+
+  ● entradas inválidas › FR-013 FR-015: userId inválido em DELETE /creators/1/followers/1e3 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      86 |       const response = await send(method, path);
+      87 |
+    > 88 |       expect(response.status).toBe(400);
+         |                               ^
+      89 |       expect(response.body).toStrictEqual(validationError);
+      90 |     },
+      91 |   );
+
+      at tests/integration/validation.spec.ts:88:31
+
+  ● entradas inválidas › FR-013 FR-015: userId inválido em DELETE /creators/1/followers/0x10 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      86 |       const response = await send(method, path);
+      87 |
+    > 88 |       expect(response.status).toBe(400);
+         |                               ^
+      89 |       expect(response.body).toStrictEqual(validationError);
+      90 |     },
+      91 |   );
+
+      at tests/integration/validation.spec.ts:88:31
+
+  ● entradas inválidas › FR-013 FR-015: userId inválido em DELETE /creators/1/followers/01 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      86 |       const response = await send(method, path);
+      87 |
+    > 88 |       expect(response.status).toBe(400);
+         |                               ^
+      89 |       expect(response.body).toStrictEqual(validationError);
+      90 |     },
+      91 |   );
+
+      at tests/integration/validation.spec.ts:88:31
+
+  ● entradas inválidas › FR-013 FR-015: userId inválido em DELETE /creators/1/followers/2147483648 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      86 |       const response = await send(method, path);
+      87 |
+    > 88 |       expect(response.status).toBe(400);
+         |                               ^
+      89 |       expect(response.body).toStrictEqual(validationError);
+      90 |     },
+      91 |   );
+
+      at tests/integration/validation.spec.ts:88:31
+
+  ● entradas inválidas › FR-013 FR-015: userId inválido em GET /creators/1/followers/0 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      86 |       const response = await send(method, path);
+      87 |
+    > 88 |       expect(response.status).toBe(400);
+         |                               ^
+      89 |       expect(response.body).toStrictEqual(validationError);
+      90 |     },
+      91 |   );
+
+      at tests/integration/validation.spec.ts:88:31
+
+  ● entradas inválidas › FR-013 FR-015: userId inválido em GET /creators/1/followers/-1 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      86 |       const response = await send(method, path);
+      87 |
+    > 88 |       expect(response.status).toBe(400);
+         |                               ^
+      89 |       expect(response.body).toStrictEqual(validationError);
+      90 |     },
+      91 |   );
+
+      at tests/integration/validation.spec.ts:88:31
+
+  ● entradas inválidas › FR-013 FR-015: userId inválido em GET /creators/1/followers/abc responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      86 |       const response = await send(method, path);
+      87 |
+    > 88 |       expect(response.status).toBe(400);
+         |                               ^
+      89 |       expect(response.body).toStrictEqual(validationError);
+      90 |     },
+      91 |   );
+
+      at tests/integration/validation.spec.ts:88:31
+
+  ● entradas inválidas › FR-013 FR-015: userId inválido em GET /creators/1/followers/1.5 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      86 |       const response = await send(method, path);
+      87 |
+    > 88 |       expect(response.status).toBe(400);
+         |                               ^
+      89 |       expect(response.body).toStrictEqual(validationError);
+      90 |     },
+      91 |   );
+
+      at tests/integration/validation.spec.ts:88:31
+
+  ● entradas inválidas › FR-013 FR-015: userId inválido em GET /creators/1/followers/1e3 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      86 |       const response = await send(method, path);
+      87 |
+    > 88 |       expect(response.status).toBe(400);
+         |                               ^
+      89 |       expect(response.body).toStrictEqual(validationError);
+      90 |     },
+      91 |   );
+
+      at tests/integration/validation.spec.ts:88:31
+
+  ● entradas inválidas › FR-013 FR-015: userId inválido em GET /creators/1/followers/0x10 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      86 |       const response = await send(method, path);
+      87 |
+    > 88 |       expect(response.status).toBe(400);
+         |                               ^
+      89 |       expect(response.body).toStrictEqual(validationError);
+      90 |     },
+      91 |   );
+
+      at tests/integration/validation.spec.ts:88:31
+
+  ● entradas inválidas › FR-013 FR-015: userId inválido em GET /creators/1/followers/01 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      86 |       const response = await send(method, path);
+      87 |
+    > 88 |       expect(response.status).toBe(400);
+         |                               ^
+      89 |       expect(response.body).toStrictEqual(validationError);
+      90 |     },
+      91 |   );
+
+      at tests/integration/validation.spec.ts:88:31
+
+  ● entradas inválidas › FR-013 FR-015: userId inválido em GET /creators/1/followers/2147483648 responde 400 VALIDATION_ERROR em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      86 |       const response = await send(method, path);
+      87 |
+    > 88 |       expect(response.status).toBe(400);
+         |                               ^
+      89 |       expect(response.body).toStrictEqual(validationError);
+      90 |     },
+      91 |   );
+
+      at tests/integration/validation.spec.ts:88:31
+
+  ● entradas inválidas › FR-013: creatorId 2147483647 na rota é aceito e responde 404 CREATOR_NOT_FOUND
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+       96 |     );
+       97 |
+    >  98 |     expect(response.status).toBe(404);
+          |                             ^
+       99 |     expect(response.body).toStrictEqual({
+      100 |       error: { code: 'CREATOR_NOT_FOUND', message: 'Criadora não encontrada.' },
+      101 |     });
+
+      at Object.<anonymous> (tests/integration/validation.spec.ts:98:29)
+
+  ● entradas inválidas › FR-013: userId 2147483647 na rota é aceito e responde 404 USER_NOT_FOUND
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+      107 |     );
+      108 |
+    > 109 |     expect(response.status).toBe(404);
+          |                             ^
+      110 |     expect(response.body).toStrictEqual({
+      111 |       error: { code: 'USER_NOT_FOUND', message: 'Usuário não encontrado.' },
+      112 |     });
+
+      at Object.<anonymous> (tests/integration/validation.spec.ts:109:29)
+
+  ● entradas inválidas › FR-014 FR-015: corpo sem userId responde 400 VALIDATION_ERROR em português e nada é gravado
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      130 |         .send(body);
+      131 |
+    > 132 |       expect(response.status).toBe(400);
+          |                               ^
+      133 |       expect(response.body).toStrictEqual(validationError);
+      134 |       await expect(countFollowRows()).resolves.toBe(0);
+      135 |     },
+
+      at tests/integration/validation.spec.ts:132:31
+
+  ● entradas inválidas › FR-014 FR-015: corpo userId texto "1" responde 400 VALIDATION_ERROR em português e nada é gravado
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      130 |         .send(body);
+      131 |
+    > 132 |       expect(response.status).toBe(400);
+          |                               ^
+      133 |       expect(response.body).toStrictEqual(validationError);
+      134 |       await expect(countFollowRows()).resolves.toBe(0);
+      135 |     },
+
+      at tests/integration/validation.spec.ts:132:31
+
+  ● entradas inválidas › FR-014 FR-015: corpo campo extra responde 400 VALIDATION_ERROR em português e nada é gravado
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      130 |         .send(body);
+      131 |
+    > 132 |       expect(response.status).toBe(400);
+          |                               ^
+      133 |       expect(response.body).toStrictEqual(validationError);
+      134 |       await expect(countFollowRows()).resolves.toBe(0);
+      135 |     },
+
+      at tests/integration/validation.spec.ts:132:31
+
+  ● entradas inválidas › FR-014 FR-015: corpo userId 0 responde 400 VALIDATION_ERROR em português e nada é gravado
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      130 |         .send(body);
+      131 |
+    > 132 |       expect(response.status).toBe(400);
+          |                               ^
+      133 |       expect(response.body).toStrictEqual(validationError);
+      134 |       await expect(countFollowRows()).resolves.toBe(0);
+      135 |     },
+
+      at tests/integration/validation.spec.ts:132:31
+
+  ● entradas inválidas › FR-014 FR-015: corpo userId -1 responde 400 VALIDATION_ERROR em português e nada é gravado
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      130 |         .send(body);
+      131 |
+    > 132 |       expect(response.status).toBe(400);
+          |                               ^
+      133 |       expect(response.body).toStrictEqual(validationError);
+      134 |       await expect(countFollowRows()).resolves.toBe(0);
+      135 |     },
+
+      at tests/integration/validation.spec.ts:132:31
+
+  ● entradas inválidas › FR-014 FR-015: corpo userId 1.5 responde 400 VALIDATION_ERROR em português e nada é gravado
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      130 |         .send(body);
+      131 |
+    > 132 |       expect(response.status).toBe(400);
+          |                               ^
+      133 |       expect(response.body).toStrictEqual(validationError);
+      134 |       await expect(countFollowRows()).resolves.toBe(0);
+      135 |     },
+
+      at tests/integration/validation.spec.ts:132:31
+
+  ● entradas inválidas › FR-014 FR-015: corpo userId 2147483648 responde 400 VALIDATION_ERROR em português e nada é gravado
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      130 |         .send(body);
+      131 |
+    > 132 |       expect(response.status).toBe(400);
+          |                               ^
+      133 |       expect(response.body).toStrictEqual(validationError);
+      134 |       await expect(countFollowRows()).resolves.toBe(0);
+      135 |     },
+
+      at tests/integration/validation.spec.ts:132:31
+
+  ● entradas inválidas › FR-014 FR-015: corpo userId null responde 400 VALIDATION_ERROR em português e nada é gravado
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      130 |         .send(body);
+      131 |
+    > 132 |       expect(response.status).toBe(400);
+          |                               ^
+      133 |       expect(response.body).toStrictEqual(validationError);
+      134 |       await expect(countFollowRows()).resolves.toBe(0);
+      135 |     },
+
+      at tests/integration/validation.spec.ts:132:31
+
+  ● entradas inválidas › FR-014 FR-015: corpo userId booleano responde 400 VALIDATION_ERROR em português e nada é gravado
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      130 |         .send(body);
+      131 |
+    > 132 |       expect(response.status).toBe(400);
+          |                               ^
+      133 |       expect(response.body).toStrictEqual(validationError);
+      134 |       await expect(countFollowRows()).resolves.toBe(0);
+      135 |     },
+
+      at tests/integration/validation.spec.ts:132:31
+
+  ● entradas inválidas › FR-014 FR-015: JSON malformado responde 400 VALIDATION_ERROR em português e nada é gravado
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      142 |       .send('{"userId": 1');
+      143 |
+    > 144 |     expect(response.status).toBe(400);
+          |                             ^
+      145 |     expect(response.body).toStrictEqual(validationError);
+      146 |     await expect(countFollowRows()).resolves.toBe(0);
+      147 |   });
+
+      at Object.<anonymous> (tests/integration/validation.spec.ts:144:29)
+
+  ● entradas inválidas › FR-014: userId 2147483647 no corpo é aceito e responde 404 USER_NOT_FOUND
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+      152 |       .send({ userId: 2147483647 });
+      153 |
+    > 154 |     expect(response.status).toBe(404);
+          |                             ^
+      155 |     expect(response.body).toStrictEqual({
+      156 |       error: { code: 'USER_NOT_FOUND', message: 'Usuário não encontrado.' },
+      157 |     });
+
+      at Object.<anonymous> (tests/integration/validation.spec.ts:154:29)
+
+  ● entradas inválidas › FR-013 FR-015: rota inexistente responde 404 NOT_FOUND em português
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 500
+
+      161 |     const response = await request(running.url).get('/rota-inexistente');
+      162 |
+    > 163 |     expect(response.status).toBe(404);
+          |                             ^
+      164 |     expect(response.body).toStrictEqual({
+      165 |       error: { code: 'NOT_FOUND', message: 'Recurso não encontrado.' },
+      166 |     });
+
+      at Object.<anonymous> (tests/integration/validation.spec.ts:163:29)
+
+FAIL tests/integration/concurrency.spec.ts
+  ● concorrência › FR-005: 30 POSTs simultâneos de Ana para Luna Prado geram exatamente um 201, 29 200, uma relação e count 1
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 0
+    Received array:  []
+
+      40 |
+      41 |     const statuses = responses.map((response) => response.status);
+    > 42 |     expect(statuses.filter((status) => status === 201)).toHaveLength(1);
+         |                                                         ^
+      43 |     expect(statuses.filter((status) => status === 200)).toHaveLength(29);
+      44 |     for (const response of responses) {
+      45 |       expect(response.body).toStrictEqual({ creatorId: 1, count: 1 });
+
+      at Object.<anonymous> (tests/integration/concurrency.spec.ts:42:57)
+
+  ● concorrência › FR-006: 30 usuários seguindo Luna Prado ao mesmo tempo resultam em count exatamente 30
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 30
+    + Received  + 30
+
+      Array [
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    -   201,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+      ]
+
+      64 |     );
+      65 |
+    > 66 |     expect(responses.map((response) => response.status)).toEqual(
+         |                                                          ^
+      67 |       userIds.map(() => 201),
+      68 |     );
+      69 |     const counts = responses.map(
+
+      at Object.<anonymous> (tests/integration/concurrency.spec.ts:66:58)
+
+  ● concorrência › FR-007: 40 POST e DELETE alternados e simultâneos de Ana não geram erro interno e deixam estado coerente
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 42
+
+    - Array []
+    + Array [
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    +   500,
+    + ]
+
+      90 |
+      91 |     const statuses = responses.map((response) => response.status);
+    > 92 |     expect(statuses.filter((status) => status >= 500)).toEqual([]);
+         |                                                        ^
+      93 |     statuses.forEach((status, index) => {
+      94 |       expect(index % 2 === 0 ? [200, 201] : [204]).toContain(status);
+      95 |     });
+
+      at Object.<anonymous> (tests/integration/concurrency.spec.ts:92:56)
+
+FAIL tests/integration/read-endpoints.spec.ts
+  ● leituras extras para a página › FR-016: GET /creators/1 responde { id: 1, name: "Luna Prado" }
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 500
+
+      22 |     const response = await request(running.url).get('/creators/1');
+      23 |
+    > 24 |     expect(response.status).toBe(200);
+         |                             ^
+      25 |     expect(response.body).toStrictEqual({ id: 1, name: 'Luna Prado' });
+      26 |   });
+      27 |
+
+      at Object.<anonymous> (tests/integration/read-endpoints.spec.ts:24:29)
+
+  ● leituras extras para a página › FR-016: GET /creators/2 responde { id: 2, name: "Mel Duarte" }
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 500
+
+      29 |     const response = await request(running.url).get('/creators/2');
+      30 |
+    > 31 |     expect(response.status).toBe(200);
+         |                             ^
+      32 |     expect(response.body).toStrictEqual({ id: 2, name: 'Mel Duarte' });
+      33 |   });
+      34 |
+
+      at Object.<anonymous> (tests/integration/read-endpoints.spec.ts:31:29)
+
+  ● leituras extras para a página › FR-017: responde following true para Ana, que segue Luna Prado, e false para Bruno, que não segue
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 500
+
+      41 |     const bruno = await request(running.url).get('/creators/1/followers/2');
+      42 |
+    > 43 |     expect(ana.status).toBe(200);
+         |                        ^
+      44 |     expect(ana.body).toStrictEqual({ following: true });
+      45 |     expect(bruno.status).toBe(200);
+      46 |     expect(bruno.body).toStrictEqual({ following: false });
+
+      at Object.<anonymous> (tests/integration/read-endpoints.spec.ts:43:24)
+
+  ● leituras extras para a página › FR-017: responde following false depois de deixar de seguir
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 500
+
+      55 |     const response = await request(running.url).get('/creators/1/followers/1');
+      56 |
+    > 57 |     expect(response.status).toBe(200);
+         |                             ^
+      58 |     expect(response.body).toStrictEqual({ following: false });
+      59 |   });
+      60 |
+
+      at Object.<anonymous> (tests/integration/read-endpoints.spec.ts:57:29)
+
+  ● leituras extras para a página › FR-018: GET /users lista Ana, Bruno e Carla em ordem crescente de id
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 500
+
+      62 |     const response = await request(running.url).get('/users');
+      63 |
+    > 64 |     expect(response.status).toBe(200);
+         |                             ^
+      65 |     expect(response.body).toStrictEqual([
+      66 |       { id: 1, name: 'Ana' },
+      67 |       { id: 2, name: 'Bruno' },
+
+      at Object.<anonymous> (tests/integration/read-endpoints.spec.ts:64:29)
+
+  ● leituras extras para a página › FR-018: GET /users mantém a ordem crescente de id mesmo quando a ordem física das linhas muda
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 500
+
+      75 |     const response = await request(running.url).get('/users');
+      76 |
+    > 77 |     expect(response.status).toBe(200);
+         |                             ^
+      78 |     expect(response.body).toStrictEqual([
+      79 |       { id: 1, name: 'Ana' },
+      80 |       { id: 2, name: 'Bruno' },
+
+      at Object.<anonymous> (tests/integration/read-endpoints.spec.ts:77:29)
+
+FAIL tests/integration/unfollow.spec.ts
+  ● DELETE /creators/:creatorId/followers/:userId › FR-003: responde 204 sem corpo e a contagem de Luna Prado volta a 0
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 204
+    Received: 500
+
+      32 |     );
+      33 |
+    > 34 |     expect(response.status).toBe(204);
+         |                             ^
+      35 |     expect(response.text).toBe('');
+      36 |     await expect(countFollowRows()).resolves.toBe(0);
+      37 |
+
+      at Object.<anonymous> (tests/integration/unfollow.spec.ts:34:29)
+
+  ● DELETE /creators/:creatorId/followers/:userId › FR-003: remove só a relação pedida e mantém as demais
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 204
+    Received: 500
+
+      53 |     );
+      54 |
+    > 55 |     expect(response.status).toBe(204);
+         |                             ^
+      56 |     const count = await request(running.url).get('/creators/1/followers/count');
+      57 |     expect(count.body).toStrictEqual({ creatorId: 1, count: 1 });
+      58 |   });
+
+      at Object.<anonymous> (tests/integration/unfollow.spec.ts:55:29)
+
+  ● DELETE /creators/:creatorId/followers/:userId › FR-004: responde a mesma confirmação 204 sem corpo para quem não seguia e a contagem continua 0
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 204
+    Received: 500
+
+      63 |     );
+      64 |
+    > 65 |     expect(response.status).toBe(204);
+         |                             ^
+      66 |     expect(response.text).toBe('');
+      67 |
+      68 |     const count = await request(running.url).get('/creators/1/followers/count');
+
+      at Object.<anonymous> (tests/integration/unfollow.spec.ts:65:29)
+
+  ● DELETE /creators/:creatorId/followers/:userId › FR-004: repetir o DELETE responde 204 nas duas vezes
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 2
+
+      Array [
+    -   204,
+    -   204,
+    +   500,
+    +   500,
+      ]
+
+      79 |     const second = await request(running.url).delete('/creators/1/followers/1');
+      80 |
+    > 81 |     expect([first.status, second.status]).toEqual([204, 204]);
+         |                                           ^
+      82 |     await expect(countFollowRows()).resolves.toBe(0);
+      83 |   });
+      84 | });
+
+      at Object.<anonymous> (tests/integration/unfollow.spec.ts:81:43)
+
+FAIL tests/integration/follow.spec.ts
+  ● POST /creators/:creatorId/followers › FR-001: responde 201 com { creatorId: 1, count: 1 } quando Ana passa a seguir Luna Prado
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 201
+    Received: 500
+
+      28 |       .send({ userId: 1 });
+      29 |
+    > 30 |     expect(response.status).toBe(201);
+         |                             ^
+      31 |     expect(response.body).toStrictEqual({ creatorId: 1, count: 1 });
+      32 |     await expect(countFollowRows()).resolves.toBe(1);
+      33 |   });
+
+      at Object.<anonymous> (tests/integration/follow.spec.ts:30:29)
+
+  ● POST /creators/:creatorId/followers › FR-001: a contagem de Luna Prado passa a 1 depois de seguir
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 500
+
+      42 |     );
+      43 |
+    > 44 |     expect(response.status).toBe(200);
+         |                             ^
+      45 |     expect(response.body).toStrictEqual({ creatorId: 1, count: 1 });
+      46 |   });
+      47 |
+
+      at Object.<anonymous> (tests/integration/follow.spec.ts:44:29)
+
+  ● POST /creators/:creatorId/followers › FR-002: segundo POST responde 200 com count 1 e não duplica a relação
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 500
+
+      55 |       .send({ userId: 1 });
+      56 |
+    > 57 |     expect(response.status).toBe(200);
+         |                             ^
+      58 |     expect(response.body).toStrictEqual({ creatorId: 1, count: 1 });
+      59 |     await expect(countFollowRows()).resolves.toBe(1);
+      60 |   });
+
+      at Object.<anonymous> (tests/integration/follow.spec.ts:57:29)
+
+  ● POST /creators/:creatorId/followers › FR-001: seguir a criadora 2 responde com creatorId 2 e não altera a contagem da criadora 1
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 201
+    Received: 500
+
+      65 |       .send({ userId: 3 });
+      66 |
+    > 67 |     expect(response.status).toBe(201);
+         |                             ^
+      68 |     expect(response.body).toStrictEqual({ creatorId: 2, count: 1 });
+      69 |
+      70 |     const countOfFirst = await request(running.url).get(
+
+      at Object.<anonymous> (tests/integration/follow.spec.ts:67:29)
+
+FAIL tests/integration/count.spec.ts
+  ● GET /creators/:creatorId/followers/count › FR-008: responde { creatorId: 1, count: 2 } com ambos numéricos quando Ana e Bruno seguem Luna Prado
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 500
+
+      31 |     );
+      32 |
+    > 33 |     expect(response.status).toBe(200);
+         |                             ^
+      34 |     expect(response.body).toStrictEqual({ creatorId: 1, count: 2 });
+      35 |     const body = response.body as { creatorId: unknown; count: unknown };
+      36 |     expect(typeof body.creatorId).toBe('number');
+
+      at Object.<anonymous> (tests/integration/count.spec.ts:33:29)
+
+  ● GET /creators/:creatorId/followers/count › FR-008: responde count 0 numérico para criadora sem seguidores
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 500
+
+      43 |     );
+      44 |
+    > 45 |     expect(response.status).toBe(200);
+         |                             ^
+      46 |     expect(response.body).toStrictEqual({ creatorId: 2, count: 0 });
+      47 |   });
+      48 |
+
+      at Object.<anonymous> (tests/integration/count.spec.ts:45:29)
+
+  ● GET /creators/:creatorId/followers/count › FR-008: conta só os seguidores da criadora consultada
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 500
+
+      62 |     );
+      63 |
+    > 64 |     expect(response.status).toBe(200);
+         |                             ^
+      65 |     expect(response.body).toStrictEqual({ creatorId: 2, count: 2 });
+      66 |   });
+      67 | });
+
+      at Object.<anonymous> (tests/integration/count.spec.ts:64:29)
+
+Test Suites: 7 failed, 7 total
+Tests:       106 failed, 1 passed, 107 total
+Snapshots:   0 total
+Time:        1.728 s
+Ran all test suites.

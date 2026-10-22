@@ -1,0 +1,922 @@
+# Red da Fase 3 (T049), 2026-10-22T19:02:46-03:00
+
+## npm run test:e2e (exit 1: 20 de 20 falham por asserção; public/index.html é esqueleto sem script)
+
+
+> follow-creator-api@0.0.1 test:e2e
+> playwright test
+
+Test database rebuilt.
+
+Running 20 tests using 1 worker
+
+  ✘   1 [chromium] › e2e/page-a11y.spec.ts:30:5 › FR-028: só com teclado, Tab foca "Você é", seta troca para Bruno, Tab chega ao botão e Enter segue (5.3s)
+  ✘   2 [chromium] › e2e/page-a11y.spec.ts:58:5 › FR-028: só com teclado, Tab até o botão e Espaço segue (5.1s)
+  ✘   3 [chromium] › e2e/page-a11y.spec.ts:79:5 › FR-029: o botão expõe aria-pressed false/true e a contagem fica numa região aria-live="polite" antes e depois de seguir (5.1s)
+  ✘   4 [chromium] › e2e/page-a11y.spec.ts:112:7 › FR-030: em 375x812 nome, contagem, seletor e botão ficam visíveis sem rolagem horizontal (5.1s)
+  ✘   5 [chromium] › e2e/page-a11y.spec.ts:112:7 › FR-030: em 1280x800 nome, contagem, seletor e botão ficam visíveis sem rolagem horizontal (5.1s)
+  ✘   6 [chromium] › e2e/page-actions.spec.ts:17:5 › FR-019 FR-023: seguir troca o botão para "Deixar de seguir" e a contagem para "1 seguidor"; deixar de seguir volta a "Seguir" e "0 seguidores" (5.1s)
+  ✘   7 [chromium] › e2e/page-actions.spec.ts:46:5 › FR-022 FR-023: trocar o usuário em "Você é" atualiza o botão e a ação vale para o usuário escolhido (5.3s)
+  ✘   8 [chromium] › e2e/page-actions.spec.ts:80:5 › FR-025: duplo clique em "Seguir" envia um único POST e nenhum DELETE, com o botão desabilitado e aria-busy durante a ação (5.1s)
+  ✘   9 [chromium] › e2e/page-actions.spec.ts:121:5 › FR-026: falha de rede no POST mostra a mensagem e mantém "0 seguidores" e "Seguir"; a ação seguinte limpa a mensagem (5.1s)
+  ✘  10 [chromium] › e2e/page-actions.spec.ts:151:5 › FR-026: resposta 500 no POST mostra a mensagem e mantém "0 seguidores" e "Seguir" (5.1s)
+  ✘  11 [chromium] › e2e/page-actions.spec.ts:178:5 › FR-026: resposta 500 no DELETE mostra a mensagem e mantém "1 seguidor" e "Deixar de seguir" (5.2s)
+  ✘  12 [chromium] › e2e/page-actions.spec.ts:206:5 › FR-026: resposta 500 na releitura da contagem depois de um POST bem-sucedido mostra a mensagem e mantém "0 seguidores" e "Seguir" (5.2s)
+  ✘  13 [chromium] › e2e/page-load.spec.ts:13:5 › FR-019 FR-022 FR-023: estado inicial mostra Luna Prado, "0 seguidores", Ana selecionada em "Você é" e o botão "Seguir" (5.1s)
+  ✘  14 [chromium] › e2e/page-load.spec.ts:34:5 › FR-020: ?creatorId=2 mostra Mel Duarte com "0 seguidores" e o botão "Seguir" (5.1s)
+  ✘  15 [chromium] › e2e/page-load.spec.ts:45:5 › FR-020: ?creatorId= vazio usa a criadora 1 (Luna Prado) (5.1s)
+  ✘  16 [chromium] › e2e/page-load.spec.ts:56:7 › FR-021: ?creatorId=999 mostra "Criadora não encontrada." sem seletor e sem botão (5.1s)
+  ✘  17 [chromium] › e2e/page-load.spec.ts:56:7 › FR-021: ?creatorId=abc mostra "Criadora não encontrada." sem seletor e sem botão (5.1s)
+  ✘  18 [chromium] › e2e/page-load.spec.ts:56:7 › FR-021: ?creatorId=0 mostra "Criadora não encontrada." sem seletor e sem botão (5.2s)
+  ✘  19 [chromium] › e2e/page-load.spec.ts:70:5 › FR-027: mostra "Carregando…" sem botão enquanto os dados iniciais não chegam e o esconde quando chegam (5.1s)
+  ✘  20 [chromium] › e2e/page-multi-user.spec.ts:11:5 › FR-024 FR-023: com Ana e Bruno na página vendo "0 seguidores", Ana segue e depois Bruno segue sem recarregar e vê "2 seguidores" (5.2s)
+
+
+  1) [chromium] › e2e/page-a11y.spec.ts:30:5 › FR-028: só com teclado, Tab foca "Você é", seta troca para Bruno, Tab chega ao botão e Enter segue 
+
+    Error: expect(locator).toBeEnabled() failed
+
+    Locator: getByRole('button', { name: 'Deixar de seguir', exact: true })
+    Expected: enabled
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeEnabled" getByRole('button', { name: 'Deixar de seguir', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Deixar de seguir', exact: true })
+
+
+      34 |   await followViaApi(request, 1, 1);
+      35 |   await page.goto('/');
+    > 36 |   await expect(unfollowButton(page)).toBeEnabled();
+         |                                      ^
+      37 |   await expect(followerCount(page, '1 seguidor')).toBeVisible();
+      38 |
+      39 |   await page.keyboard.press('Tab');
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-a11y.spec.ts:36:38
+
+    Error Context: test-results/page-a11y-FR-028-só-com-te-b6ecc-hega-ao-botão-e-Enter-segue-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-a11y-FR-028-só-com-te-b6ecc-hega-ao-botão-e-Enter-segue-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-a11y-FR-028-só-com-te-b6ecc-hega-ao-botão-e-Enter-segue-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › e2e/page-a11y.spec.ts:58:5 › FR-028: só com teclado, Tab até o botão e Espaço segue 
+
+    Error: expect(locator).toBeEnabled() failed
+
+    Locator: getByRole('button', { name: 'Seguir', exact: true })
+    Expected: enabled
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeEnabled" getByRole('button', { name: 'Seguir', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Seguir', exact: true })
+
+
+      61 | }) => {
+      62 |   await page.goto('/');
+    > 63 |   await expect(followButton(page)).toBeEnabled();
+         |                                    ^
+      64 |
+      65 |   await page.keyboard.press('Tab');
+      66 |   await expect(userSelect(page)).toBeFocused();
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-a11y.spec.ts:63:36
+
+    Error Context: test-results/page-a11y-FR-028-só-com-te-1b40e--até-o-botão-e-Espaço-segue-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-a11y-FR-028-só-com-te-1b40e--até-o-botão-e-Espaço-segue-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-a11y-FR-028-só-com-te-1b40e--até-o-botão-e-Espaço-segue-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › e2e/page-a11y.spec.ts:79:5 › FR-029: o botão expõe aria-pressed false/true e a contagem fica numa região aria-live="polite" antes e depois de seguir 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('button', { name: 'Seguir', exact: true, pressed: false })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('button', { name: 'Seguir', exact: true, pressed: false }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Seguir', exact: true, pressed: false })
+
+
+      83 |   await expect(
+      84 |     page.getByRole('button', { name: 'Seguir', exact: true, pressed: false }),
+    > 85 |   ).toBeVisible();
+         |     ^
+      86 |   await expect(followButton(page)).toHaveAttribute('aria-pressed', 'false');
+      87 |   await expect(followerCount(page, '0 seguidores')).toBeVisible();
+      88 |   expect(await liveRegionPoliteness(followerCount(page, '0 seguidores'))).toBe(
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-a11y.spec.ts:85:5
+
+    Error Context: test-results/page-a11y-FR-029-o-botão-e-5750d-te-antes-e-depois-de-seguir-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-a11y-FR-029-o-botão-e-5750d-te-antes-e-depois-de-seguir-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-a11y-FR-029-o-botão-e-5750d-te-antes-e-depois-de-seguir-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › e2e/page-a11y.spec.ts:112:7 › FR-030: em 375x812 nome, contagem, seletor e botão ficam visíveis sem rolagem horizontal 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Luna Prado', exact: true, level: 1 })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'Luna Prado', exact: true, level: 1 }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'Luna Prado', exact: true, level: 1 })
+
+
+      123 |     ];
+      124 |     for (const locator of content) {
+    > 125 |       await expect(locator).toBeVisible();
+          |                             ^
+      126 |       const box = await locator.boundingBox();
+      127 |       expect(box).not.toBeNull();
+      128 |       expect(box?.x ?? -1).toBeGreaterThanOrEqual(0);
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-a11y.spec.ts:125:29
+
+    Error Context: test-results/page-a11y-FR-030-em-375x81-ae1d2-veis-sem-rolagem-horizontal-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-a11y-FR-030-em-375x81-ae1d2-veis-sem-rolagem-horizontal-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-a11y-FR-030-em-375x81-ae1d2-veis-sem-rolagem-horizontal-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › e2e/page-a11y.spec.ts:112:7 › FR-030: em 1280x800 nome, contagem, seletor e botão ficam visíveis sem rolagem horizontal 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Luna Prado', exact: true, level: 1 })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'Luna Prado', exact: true, level: 1 }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'Luna Prado', exact: true, level: 1 })
+
+
+      123 |     ];
+      124 |     for (const locator of content) {
+    > 125 |       await expect(locator).toBeVisible();
+          |                             ^
+      126 |       const box = await locator.boundingBox();
+      127 |       expect(box).not.toBeNull();
+      128 |       expect(box?.x ?? -1).toBeGreaterThanOrEqual(0);
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-a11y.spec.ts:125:29
+
+    Error Context: test-results/page-a11y-FR-030-em-1280x8-a6bb7-veis-sem-rolagem-horizontal-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-a11y-FR-030-em-1280x8-a6bb7-veis-sem-rolagem-horizontal-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-a11y-FR-030-em-1280x8-a6bb7-veis-sem-rolagem-horizontal-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › e2e/page-actions.spec.ts:17:5 › FR-019 FR-023: seguir troca o botão para "Deixar de seguir" e a contagem para "1 seguidor"; deixar de seguir volta a "Seguir" e "0 seguidores" 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('0 seguidores', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('0 seguidores', { exact: true }) with timeout 5000ms
+      - waiting for getByText('0 seguidores', { exact: true })
+
+
+      20 | }) => {
+      21 |   await page.goto('/');
+    > 22 |   await expect(followerCount(page, '0 seguidores')).toBeVisible();
+         |                                                     ^
+      23 |
+      24 |   await followButton(page).click();
+      25 |
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-actions.spec.ts:22:53
+
+    Error Context: test-results/page-actions-FR-019-FR-023-050a0-ta-a-Seguir-e-0-seguidores--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-actions-FR-019-FR-023-050a0-ta-a-Seguir-e-0-seguidores--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-actions-FR-019-FR-023-050a0-ta-a-Seguir-e-0-seguidores--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [chromium] › e2e/page-actions.spec.ts:46:5 › FR-022 FR-023: trocar o usuário em "Você é" atualiza o botão e a ação vale para o usuário escolhido 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('combobox', { name: 'Você é', exact: true }).getByRole('option', { name: 'Ana', exact: true, selected: true })
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('combobox', { name: 'Você é', exact: true }).getByRole('option', { name: 'Ana', exact: true, selected: true }) with timeout 5000ms
+      - waiting for getByRole('combobox', { name: 'Você é', exact: true }).getByRole('option', { name: 'Ana', exact: true, selected: true })
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      50 |   await followViaApi(request, 1, 1);
+      51 |   await page.goto('/');
+    > 52 |   await expect(selectedUser(page, 'Ana')).toHaveCount(1);
+         |                                           ^
+      53 |   await expect(unfollowButton(page)).toBeVisible();
+      54 |   await expect(followerCount(page, '1 seguidor')).toBeVisible();
+      55 |
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-actions.spec.ts:52:43
+
+    Error Context: test-results/page-actions-FR-022-FR-023-8cce2-le-para-o-usuário-escolhido-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-actions-FR-022-FR-023-8cce2-le-para-o-usuário-escolhido-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-actions-FR-022-FR-023-8cce2-le-para-o-usuário-escolhido-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [chromium] › e2e/page-actions.spec.ts:80:5 › FR-025: duplo clique em "Seguir" envia um único POST e nenhum DELETE, com o botão desabilitado e aria-busy durante a ação 
+
+    Error: expect(locator).toBeEnabled() failed
+
+    Locator: getByRole('button', { name: 'Seguir', exact: true })
+    Expected: enabled
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeEnabled" getByRole('button', { name: 'Seguir', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Seguir', exact: true })
+
+
+      100 |   });
+      101 |   await page.goto('/');
+    > 102 |   await expect(followButton(page)).toBeEnabled();
+          |                                    ^
+      103 |
+      104 |   await followButton(page).dblclick();
+      105 |
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-actions.spec.ts:102:36
+
+    Error Context: test-results/page-actions-FR-025-duplo--976e2--e-aria-busy-durante-a-ação-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-actions-FR-025-duplo--976e2--e-aria-busy-durante-a-ação-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-actions-FR-025-duplo--976e2--e-aria-busy-durante-a-ação-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) [chromium] › e2e/page-actions.spec.ts:121:5 › FR-026: falha de rede no POST mostra a mensagem e mantém "0 seguidores" e "Seguir"; a ação seguinte limpa a mensagem 
+
+    Error: expect(locator).toBeEnabled() failed
+
+    Locator: getByRole('button', { name: 'Seguir', exact: true })
+    Expected: enabled
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeEnabled" getByRole('button', { name: 'Seguir', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Seguir', exact: true })
+
+
+      130 |   });
+      131 |   await page.goto('/');
+    > 132 |   await expect(followButton(page)).toBeEnabled();
+          |                                    ^
+      133 |
+      134 |   await followButton(page).click();
+      135 |
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-actions.spec.ts:132:36
+
+    Error Context: test-results/page-actions-FR-026-falha--72525-o-seguinte-limpa-a-mensagem-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-actions-FR-026-falha--72525-o-seguinte-limpa-a-mensagem-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-actions-FR-026-falha--72525-o-seguinte-limpa-a-mensagem-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  10) [chromium] › e2e/page-actions.spec.ts:151:5 › FR-026: resposta 500 no POST mostra a mensagem e mantém "0 seguidores" e "Seguir" 
+
+    Error: expect(locator).toBeEnabled() failed
+
+    Locator: getByRole('button', { name: 'Seguir', exact: true })
+    Expected: enabled
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeEnabled" getByRole('button', { name: 'Seguir', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Seguir', exact: true })
+
+
+      161 |   });
+      162 |   await page.goto('/');
+    > 163 |   await expect(followButton(page)).toBeEnabled();
+          |                                    ^
+      164 |
+      165 |   await followButton(page).click();
+      166 |
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-actions.spec.ts:163:36
+
+    Error Context: test-results/page-actions-FR-026-respos-35691-ntém-0-seguidores-e-Seguir--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-actions-FR-026-respos-35691-ntém-0-seguidores-e-Seguir--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-actions-FR-026-respos-35691-ntém-0-seguidores-e-Seguir--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  11) [chromium] › e2e/page-actions.spec.ts:178:5 › FR-026: resposta 500 no DELETE mostra a mensagem e mantém "1 seguidor" e "Deixar de seguir" 
+
+    Error: expect(locator).toBeEnabled() failed
+
+    Locator: getByRole('button', { name: 'Deixar de seguir', exact: true })
+    Expected: enabled
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeEnabled" getByRole('button', { name: 'Deixar de seguir', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Deixar de seguir', exact: true })
+
+
+      189 |   });
+      190 |   await page.goto('/');
+    > 191 |   await expect(unfollowButton(page)).toBeEnabled();
+          |                                      ^
+      192 |   await expect(followerCount(page, '1 seguidor')).toBeVisible();
+      193 |
+      194 |   await unfollowButton(page).click();
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-actions.spec.ts:191:38
+
+    Error Context: test-results/page-actions-FR-026-respos-dc43f-eguidor-e-Deixar-de-seguir--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-actions-FR-026-respos-dc43f-eguidor-e-Deixar-de-seguir--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-actions-FR-026-respos-dc43f-eguidor-e-Deixar-de-seguir--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  12) [chromium] › e2e/page-actions.spec.ts:206:5 › FR-026: resposta 500 na releitura da contagem depois de um POST bem-sucedido mostra a mensagem e mantém "0 seguidores" e "Seguir" 
+
+    Error: expect(locator).toBeEnabled() failed
+
+    Locator: getByRole('button', { name: 'Seguir', exact: true })
+    Expected: enabled
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeEnabled" getByRole('button', { name: 'Seguir', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Seguir', exact: true })
+
+
+      209 | }) => {
+      210 |   await page.goto('/');
+    > 211 |   await expect(followButton(page)).toBeEnabled();
+          |                                    ^
+      212 |   await expect(followerCount(page, '0 seguidores')).toBeVisible();
+      213 |   await page.route('**/creators/1/followers/count', (route) =>
+      214 |     route.fulfill(serverError),
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-actions.spec.ts:211:36
+
+    Error Context: test-results/page-actions-FR-026-respos-b9915-ntém-0-seguidores-e-Seguir--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-actions-FR-026-respos-b9915-ntém-0-seguidores-e-Seguir--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-actions-FR-026-respos-b9915-ntém-0-seguidores-e-Seguir--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  13) [chromium] › e2e/page-load.spec.ts:13:5 › FR-019 FR-022 FR-023: estado inicial mostra Luna Prado, "0 seguidores", Ana selecionada em "Você é" e o botão "Seguir" 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Luna Prado', exact: true, level: 1 })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'Luna Prado', exact: true, level: 1 }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'Luna Prado', exact: true, level: 1 })
+
+
+      16 |   await page.goto('/');
+      17 |
+    > 18 |   await expect(creatorHeading(page, 'Luna Prado')).toBeVisible();
+         |                                                    ^
+      19 |   await expect(followerCount(page, '0 seguidores')).toBeVisible();
+      20 |   await expect(userSelect(page)).toBeVisible();
+      21 |   await expect(userSelect(page).getByRole('option')).toHaveText([
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-load.spec.ts:18:52
+
+    Error Context: test-results/page-load-FR-019-FR-022-FR-2117c-em-Você-é-e-o-botão-Seguir--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-load-FR-019-FR-022-FR-2117c-em-Você-é-e-o-botão-Seguir--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-load-FR-019-FR-022-FR-2117c-em-Você-é-e-o-botão-Seguir--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  14) [chromium] › e2e/page-load.spec.ts:34:5 › FR-020: ?creatorId=2 mostra Mel Duarte com "0 seguidores" e o botão "Seguir" 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Mel Duarte', exact: true, level: 1 })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'Mel Duarte', exact: true, level: 1 }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'Mel Duarte', exact: true, level: 1 })
+
+
+      37 |   await page.goto('/?creatorId=2');
+      38 |
+    > 39 |   await expect(creatorHeading(page, 'Mel Duarte')).toBeVisible();
+         |                                                    ^
+      40 |   await expect(followerCount(page, '0 seguidores')).toBeVisible();
+      41 |   await expect(followButton(page)).toBeVisible();
+      42 |   await expect(creatorHeading(page, 'Luna Prado')).toHaveCount(0);
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-load.spec.ts:39:52
+
+    Error Context: test-results/page-load-FR-020-creatorId-d9bdb-eguidores-e-o-botão-Seguir--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-load-FR-020-creatorId-d9bdb-eguidores-e-o-botão-Seguir--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-load-FR-020-creatorId-d9bdb-eguidores-e-o-botão-Seguir--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  15) [chromium] › e2e/page-load.spec.ts:45:5 › FR-020: ?creatorId= vazio usa a criadora 1 (Luna Prado) 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Luna Prado', exact: true, level: 1 })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'Luna Prado', exact: true, level: 1 }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'Luna Prado', exact: true, level: 1 })
+
+
+      48 |   await page.goto('/?creatorId=');
+      49 |
+    > 50 |   await expect(creatorHeading(page, 'Luna Prado')).toBeVisible();
+         |                                                    ^
+      51 |   await expect(followerCount(page, '0 seguidores')).toBeVisible();
+      52 |   await expect(followButton(page)).toBeVisible();
+      53 | });
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-load.spec.ts:50:52
+
+    Error Context: test-results/page-load-FR-020-creatorId-80ef5-sa-a-criadora-1-Luna-Prado--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-load-FR-020-creatorId-80ef5-sa-a-criadora-1-Luna-Prado--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-load-FR-020-creatorId-80ef5-sa-a-criadora-1-Luna-Prado--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  16) [chromium] › e2e/page-load.spec.ts:56:7 › FR-021: ?creatorId=999 mostra "Criadora não encontrada." sem seletor e sem botão 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected: "Criadora não encontrada."
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      59 |     await page.goto(`/?creatorId=${creatorId}`);
+      60 |
+    > 61 |     await expect(page.getByRole('alert')).toHaveText(
+         |                                           ^
+      62 |       'Criadora não encontrada.',
+      63 |     );
+      64 |     await expect(page.getByRole('button')).toHaveCount(0);
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-load.spec.ts:61:43
+
+    Error Context: test-results/page-load-FR-021-creatorId-13132-ada-sem-seletor-e-sem-botão-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-load-FR-021-creatorId-13132-ada-sem-seletor-e-sem-botão-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-load-FR-021-creatorId-13132-ada-sem-seletor-e-sem-botão-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  17) [chromium] › e2e/page-load.spec.ts:56:7 › FR-021: ?creatorId=abc mostra "Criadora não encontrada." sem seletor e sem botão 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected: "Criadora não encontrada."
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      59 |     await page.goto(`/?creatorId=${creatorId}`);
+      60 |
+    > 61 |     await expect(page.getByRole('alert')).toHaveText(
+         |                                           ^
+      62 |       'Criadora não encontrada.',
+      63 |     );
+      64 |     await expect(page.getByRole('button')).toHaveCount(0);
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-load.spec.ts:61:43
+
+    Error Context: test-results/page-load-FR-021-creatorId-7897a-ada-sem-seletor-e-sem-botão-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-load-FR-021-creatorId-7897a-ada-sem-seletor-e-sem-botão-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-load-FR-021-creatorId-7897a-ada-sem-seletor-e-sem-botão-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  18) [chromium] › e2e/page-load.spec.ts:56:7 › FR-021: ?creatorId=0 mostra "Criadora não encontrada." sem seletor e sem botão 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected: "Criadora não encontrada."
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      59 |     await page.goto(`/?creatorId=${creatorId}`);
+      60 |
+    > 61 |     await expect(page.getByRole('alert')).toHaveText(
+         |                                           ^
+      62 |       'Criadora não encontrada.',
+      63 |     );
+      64 |     await expect(page.getByRole('button')).toHaveCount(0);
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-load.spec.ts:61:43
+
+    Error Context: test-results/page-load-FR-021-creatorId-d94dd-ada-sem-seletor-e-sem-botão-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-load-FR-021-creatorId-d94dd-ada-sem-seletor-e-sem-botão-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-load-FR-021-creatorId-d94dd-ada-sem-seletor-e-sem-botão-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  19) [chromium] › e2e/page-load.spec.ts:70:5 › FR-027: mostra "Carregando…" sem botão enquanto os dados iniciais não chegam e o esconde quando chegam 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Carregando…', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Carregando…', { exact: true }) with timeout 5000ms
+      - waiting for getByText('Carregando…', { exact: true })
+
+
+      82 |   await page.goto('/', { waitUntil: 'commit' });
+      83 |
+    > 84 |   await expect(page.getByText('Carregando…', { exact: true })).toBeVisible();
+         |                                                                ^
+      85 |   await expect(page.getByRole('button')).toHaveCount(0);
+      86 |
+      87 |   gate.open();
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-load.spec.ts:84:64
+
+    Error Context: test-results/page-load-FR-027-mostra-Ca-14ed2-m-e-o-esconde-quando-chegam-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-load-FR-027-mostra-Ca-14ed2-m-e-o-esconde-quando-chegam-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-load-FR-027-mostra-Ca-14ed2-m-e-o-esconde-quando-chegam-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  20) [chromium] › e2e/page-multi-user.spec.ts:11:5 › FR-024 FR-023: com Ana e Bruno na página vendo "0 seguidores", Ana segue e depois Bruno segue sem recarregar e vê "2 seguidores" 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('combobox', { name: 'Você é', exact: true }).getByRole('option', { name: 'Ana', exact: true, selected: true })
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('combobox', { name: 'Você é', exact: true }).getByRole('option', { name: 'Ana', exact: true, selected: true }) with timeout 5000ms
+      - waiting for getByRole('combobox', { name: 'Você é', exact: true }).getByRole('option', { name: 'Ana', exact: true, selected: true })
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      20 |
+      21 |     await page.goto('/');
+    > 22 |     await expect(selectedUser(page, 'Ana')).toHaveCount(1);
+         |                                             ^
+      23 |     await expect(followButton(page)).toBeEnabled();
+      24 |     await expect(followerCount(page, '0 seguidores')).toBeVisible();
+      25 |
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-multi-user.spec.ts:22:45
+
+    Error Context: test-results/page-multi-user-FR-024-FR--6fe8c-carregar-e-vê-2-seguidores--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-multi-user-FR-024-FR--6fe8c-carregar-e-vê-2-seguidores--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/page-multi-user-FR-024-FR--6fe8c-carregar-e-vê-2-seguidores--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  20 failed
+    [chromium] › e2e/page-a11y.spec.ts:30:5 › FR-028: só com teclado, Tab foca "Você é", seta troca para Bruno, Tab chega ao botão e Enter segue 
+    [chromium] › e2e/page-a11y.spec.ts:58:5 › FR-028: só com teclado, Tab até o botão e Espaço segue 
+    [chromium] › e2e/page-a11y.spec.ts:79:5 › FR-029: o botão expõe aria-pressed false/true e a contagem fica numa região aria-live="polite" antes e depois de seguir 
+    [chromium] › e2e/page-a11y.spec.ts:112:7 › FR-030: em 375x812 nome, contagem, seletor e botão ficam visíveis sem rolagem horizontal 
+    [chromium] › e2e/page-a11y.spec.ts:112:7 › FR-030: em 1280x800 nome, contagem, seletor e botão ficam visíveis sem rolagem horizontal 
+    [chromium] › e2e/page-actions.spec.ts:17:5 › FR-019 FR-023: seguir troca o botão para "Deixar de seguir" e a contagem para "1 seguidor"; deixar de seguir volta a "Seguir" e "0 seguidores" 
+    [chromium] › e2e/page-actions.spec.ts:46:5 › FR-022 FR-023: trocar o usuário em "Você é" atualiza o botão e a ação vale para o usuário escolhido 
+    [chromium] › e2e/page-actions.spec.ts:80:5 › FR-025: duplo clique em "Seguir" envia um único POST e nenhum DELETE, com o botão desabilitado e aria-busy durante a ação 
+    [chromium] › e2e/page-actions.spec.ts:121:5 › FR-026: falha de rede no POST mostra a mensagem e mantém "0 seguidores" e "Seguir"; a ação seguinte limpa a mensagem 
+    [chromium] › e2e/page-actions.spec.ts:151:5 › FR-026: resposta 500 no POST mostra a mensagem e mantém "0 seguidores" e "Seguir" 
+    [chromium] › e2e/page-actions.spec.ts:178:5 › FR-026: resposta 500 no DELETE mostra a mensagem e mantém "1 seguidor" e "Deixar de seguir" 
+    [chromium] › e2e/page-actions.spec.ts:206:5 › FR-026: resposta 500 na releitura da contagem depois de um POST bem-sucedido mostra a mensagem e mantém "0 seguidores" e "Seguir" 
+    [chromium] › e2e/page-load.spec.ts:13:5 › FR-019 FR-022 FR-023: estado inicial mostra Luna Prado, "0 seguidores", Ana selecionada em "Você é" e o botão "Seguir" 
+    [chromium] › e2e/page-load.spec.ts:34:5 › FR-020: ?creatorId=2 mostra Mel Duarte com "0 seguidores" e o botão "Seguir" 
+    [chromium] › e2e/page-load.spec.ts:45:5 › FR-020: ?creatorId= vazio usa a criadora 1 (Luna Prado) 
+    [chromium] › e2e/page-load.spec.ts:56:7 › FR-021: ?creatorId=999 mostra "Criadora não encontrada." sem seletor e sem botão 
+    [chromium] › e2e/page-load.spec.ts:56:7 › FR-021: ?creatorId=abc mostra "Criadora não encontrada." sem seletor e sem botão 
+    [chromium] › e2e/page-load.spec.ts:56:7 › FR-021: ?creatorId=0 mostra "Criadora não encontrada." sem seletor e sem botão 
+    [chromium] › e2e/page-load.spec.ts:70:5 › FR-027: mostra "Carregando…" sem botão enquanto os dados iniciais não chegam e o esconde quando chegam 
+    [chromium] › e2e/page-multi-user.spec.ts:11:5 › FR-024 FR-023: com Ana e Bruno na página vendo "0 seguidores", Ana segue e depois Bruno segue sem recarregar e vê "2 seguidores" 
+
+## npm run test:int (exit 1: só os 3 testes novos de FR-014 falham, 500 em vez de 400)
+
+
+> follow-creator-api@0.0.1 test:int
+> jest -c jest.int.config.ts --runInBand
+
+Test database rebuilt.
+FAIL tests/integration/validation.spec.ts
+  ● entradas inválidas › FR-014 FR-015: corpo JSON acima do limite do body-parser responde 400 VALIDATION_ERROR em português e nada é gravado
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      153 |       .send(`{"userId": 1${' '.repeat(200 * 1024)}}`);
+      154 |
+    > 155 |     expect(response.status).toBe(400);
+          |                             ^
+      156 |     expect(response.body).toStrictEqual(validationError);
+      157 |     await expect(countFollowRows()).resolves.toBe(0);
+      158 |   });
+
+      at Object.<anonymous> (tests/integration/validation.spec.ts:155:29)
+
+  ● entradas inválidas › FR-014 FR-015: Content-Type JSON com charset não suportado responde 400 VALIDATION_ERROR em português e nada é gravado
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      164 |       .send('{"userId": 1}');
+      165 |
+    > 166 |     expect(response.status).toBe(400);
+          |                             ^
+      167 |     expect(response.body).toStrictEqual(validationError);
+      168 |     await expect(countFollowRows()).resolves.toBe(0);
+      169 |   });
+
+      at Object.<anonymous> (tests/integration/validation.spec.ts:166:29)
+
+  ● entradas inválidas › FR-014 FR-015: Content-Encoding não suportado responde 400 VALIDATION_ERROR em português e nada é gravado
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 500
+
+      176 |       .send('{"userId": 1}');
+      177 |
+    > 178 |     expect(response.status).toBe(400);
+          |                             ^
+      179 |     expect(response.body).toStrictEqual(validationError);
+      180 |     await expect(countFollowRows()).resolves.toBe(0);
+      181 |   });
+
+      at Object.<anonymous> (tests/integration/validation.spec.ts:178:29)
+
+
+Test Suites: 1 failed, 6 passed, 7 total
+Tests:       3 failed, 107 passed, 110 total
+Snapshots:   0 total
+Time:        2.123 s, estimated 3 s
+Ran all test suites.
+
+
+## Red das correções I1/I2 (2026-10-22 20:10:39 -0300)
+
+> playwright test
+Test database rebuilt.
+Running 26 tests using 1 worker
+  ✓   1 [chromium] › e2e/page-a11y.spec.ts:30:5 › FR-028: só com teclado, Tab foca "Você é", seta troca para Bruno, Tab chega ao botão e Enter segue (720ms)
+  ✓   2 [chromium] › e2e/page-a11y.spec.ts:58:5 › FR-028: só com teclado, Tab até o botão e Espaço segue (452ms)
+  ✓   3 [chromium] › e2e/page-a11y.spec.ts:79:5 › FR-029: o botão expõe aria-pressed false/true e a contagem fica numa região aria-live="polite" antes e depois de seguir (353ms)
+  ✓   4 [chromium] › e2e/page-a11y.spec.ts:112:7 › FR-030: em 375x812 nome, contagem, seletor e botão ficam visíveis sem rolagem horizontal (295ms)
+  ✓   5 [chromium] › e2e/page-a11y.spec.ts:112:7 › FR-030: em 1280x800 nome, contagem, seletor e botão ficam visíveis sem rolagem horizontal (309ms)
+  ✘   6 [chromium] › e2e/page-a11y.spec.ts:141:7 › FR-028 FR-029: depois de seguir com Enter o botão continua focado com aria-pressed true e um segundo Enter deixa de seguir, com o foco mantido e aria-pressed false (5.4s)
+  ✘   7 [chromium] › e2e/page-a11y.spec.ts:141:7 › FR-028 FR-029: depois de seguir com Space o botão continua focado com aria-pressed true e um segundo Space deixa de seguir, com o foco mantido e aria-pressed false (5.5s)
+  ✓   8 [chromium] › e2e/page-actions.spec.ts:17:5 › FR-019 FR-023: seguir troca o botão para "Deixar de seguir" e a contagem para "1 seguidor"; deixar de seguir volta a "Seguir" e "0 seguidores" (592ms)
+  ✓   9 [chromium] › e2e/page-actions.spec.ts:46:5 › FR-022 FR-023: trocar o usuário em "Você é" atualiza o botão e a ação vale para o usuário escolhido (463ms)
+  ✓  10 [chromium] › e2e/page-actions.spec.ts:80:5 › FR-025: duplo clique em "Seguir" envia um único POST e nenhum DELETE, com o botão desabilitado e aria-busy durante a ação (356ms)
+  ✓  11 [chromium] › e2e/page-actions.spec.ts:121:5 › FR-026: falha de rede no POST mostra a mensagem e mantém "0 seguidores" e "Seguir"; a ação seguinte limpa a mensagem (416ms)
+  ✓  12 [chromium] › e2e/page-actions.spec.ts:151:5 › FR-026: resposta 500 no POST mostra a mensagem e mantém "0 seguidores" e "Seguir" (312ms)
+  ✓  13 [chromium] › e2e/page-actions.spec.ts:178:5 › FR-026: resposta 500 no DELETE mostra a mensagem e mantém "1 seguidor" e "Deixar de seguir" (336ms)
+  ✓  14 [chromium] › e2e/page-actions.spec.ts:206:5 › FR-026: resposta 500 na releitura da contagem depois de um POST bem-sucedido mostra a mensagem e mantém "0 seguidores" e "Seguir" (324ms)
+  ✘  15 [chromium] › e2e/page-actions.spec.ts:235:5 › FR-022: trocar de Ana para Bruno enquanto o POST de Ana está retido deixa o botão "Seguir" com aria-pressed false para Bruno, coerente com a API (5.3s)
+  ✓  16 [chromium] › e2e/page-actions.spec.ts:297:5 › FR-025: dois eventos click despachados na mesma tarefa sobre "Seguir" geram exatamente um POST e nenhum DELETE (460ms)
+  ✘  17 [chromium] › e2e/page-actions.spec.ts:335:5 › FR-022 FR-026: a troca para Bruno que falha com 500 mostra a mensagem; a troca seguinte para Carla, bem-sucedida, esvazia a área de erro e mostra "Seguir" (5.4s)
+  ✓  18 [chromium] › e2e/page-load.spec.ts:13:5 › FR-019 FR-022 FR-023: estado inicial mostra Luna Prado, "0 seguidores", Ana selecionada em "Você é" e o botão "Seguir" (429ms)
+  ✓  19 [chromium] › e2e/page-load.spec.ts:34:5 › FR-020: ?creatorId=2 mostra Mel Duarte com "0 seguidores" e o botão "Seguir" (181ms)
+  ✓  20 [chromium] › e2e/page-load.spec.ts:45:5 › FR-020: ?creatorId= vazio usa a criadora 1 (Luna Prado) (217ms)
+  ✓  21 [chromium] › e2e/page-load.spec.ts:56:7 › FR-021: ?creatorId=999 mostra "Criadora não encontrada." sem seletor e sem botão (194ms)
+  ✓  22 [chromium] › e2e/page-load.spec.ts:56:7 › FR-021: ?creatorId=abc mostra "Criadora não encontrada." sem seletor e sem botão (151ms)
+  ✓  23 [chromium] › e2e/page-load.spec.ts:56:7 › FR-021: ?creatorId=0 mostra "Criadora não encontrada." sem seletor e sem botão (167ms)
+  ✓  24 [chromium] › e2e/page-load.spec.ts:56:7 › FR-021: ?creatorId=2147483648 mostra "Criadora não encontrada." sem seletor e sem botão (173ms)
+  ✓  25 [chromium] › e2e/page-load.spec.ts:70:5 › FR-027: mostra "Carregando…" sem botão enquanto os dados iniciais não chegam e o esconde quando chegam (244ms)
+  ✓  26 [chromium] › e2e/page-multi-user.spec.ts:11:5 › FR-024 FR-023: com Ana e Bruno na página vendo "0 seguidores", Ana segue e depois Bruno segue sem recarregar e vê "2 seguidores" (642ms)
+  1) [chromium] › e2e/page-a11y.spec.ts:141:7 › FR-028 FR-029: depois de seguir com Enter o botão continua focado com aria-pressed true e um segundo Enter deixa de seguir, com o foco mantido e aria-pressed false 
+    Error: expect(locator).toBeFocused() failed
+    Locator:  getByRole('button', { name: 'Deixar de seguir', exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: 'Deixar de seguir', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Deixar de seguir', exact: true })
+        14 × locator resolved to <button type="button" class="follow" id="follow-button" aria-pressed="true">Deixar de seguir</button>
+           - unexpected value "inactive"
+      155 |     await expect(followerCount(page, '1 seguidor')).toBeVisible();
+      156 |     await expect(unfollowButton(page)).toHaveAttribute('aria-pressed', 'true');
+    > 157 |     await expect(unfollowButton(page)).toBeFocused();
+          |                                        ^
+      158 |     expect(await followingViaApi(request, 1, 1)).toStrictEqual({
+      159 |       following: true,
+      160 |     });
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-a11y.spec.ts:157:40
+    Error Context: test-results/page-a11y-FR-028-FR-029-de-9ef9b-antido-e-aria-pressed-false-chromium/error-context.md
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-a11y-FR-028-FR-029-de-9ef9b-antido-e-aria-pressed-false-chromium/trace.zip
+    Usage:
+        npx playwright show-trace test-results/page-a11y-FR-028-FR-029-de-9ef9b-antido-e-aria-pressed-false-chromium/trace.zip
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+  2) [chromium] › e2e/page-a11y.spec.ts:141:7 › FR-028 FR-029: depois de seguir com Space o botão continua focado com aria-pressed true e um segundo Space deixa de seguir, com o foco mantido e aria-pressed false 
+    Error: expect(locator).toBeFocused() failed
+    Locator:  getByRole('button', { name: 'Deixar de seguir', exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: 'Deixar de seguir', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Deixar de seguir', exact: true })
+        14 × locator resolved to <button type="button" class="follow" id="follow-button" aria-pressed="true">Deixar de seguir</button>
+           - unexpected value "inactive"
+      155 |     await expect(followerCount(page, '1 seguidor')).toBeVisible();
+      156 |     await expect(unfollowButton(page)).toHaveAttribute('aria-pressed', 'true');
+    > 157 |     await expect(unfollowButton(page)).toBeFocused();
+          |                                        ^
+      158 |     expect(await followingViaApi(request, 1, 1)).toStrictEqual({
+      159 |       following: true,
+      160 |     });
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-a11y.spec.ts:157:40
+    Error Context: test-results/page-a11y-FR-028-FR-029-de-925f6-antido-e-aria-pressed-false-chromium/error-context.md
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-a11y-FR-028-FR-029-de-925f6-antido-e-aria-pressed-false-chromium/trace.zip
+    Usage:
+        npx playwright show-trace test-results/page-a11y-FR-028-FR-029-de-925f6-antido-e-aria-pressed-false-chromium/trace.zip
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+  3) [chromium] › e2e/page-actions.spec.ts:235:5 › FR-022: trocar de Ana para Bruno enquanto o POST de Ana está retido deixa o botão "Seguir" com aria-pressed false para Bruno, coerente com a API 
+    Error: expect(locator).toBeEnabled() failed
+    Locator: getByRole('button', { name: 'Seguir', exact: true, pressed: false })
+    Expected: enabled
+    Timeout: 5000ms
+    Error: element(s) not found
+    Call log:
+      - Expect "toBeEnabled" getByRole('button', { name: 'Seguir', exact: true, pressed: false }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Seguir', exact: true, pressed: false })
+      284 |   await expect(
+      285 |     page.getByRole('button', { name: 'Seguir', exact: true, pressed: false }),
+    > 286 |   ).toBeEnabled();
+          |     ^
+      287 |   await expect(followButton(page)).toHaveAttribute('aria-pressed', 'false');
+      288 |   await expect(unfollowButton(page)).toHaveCount(0);
+      289 |   expect(await followingViaApi(request, 1, 2)).toStrictEqual({
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-actions.spec.ts:286:5
+    Error Context: test-results/page-actions-FR-022-trocar-66631-ra-Bruno-coerente-com-a-API-chromium/error-context.md
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-actions-FR-022-trocar-66631-ra-Bruno-coerente-com-a-API-chromium/trace.zip
+    Usage:
+        npx playwright show-trace test-results/page-actions-FR-022-trocar-66631-ra-Bruno-coerente-com-a-API-chromium/trace.zip
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+  4) [chromium] › e2e/page-actions.spec.ts:335:5 › FR-022 FR-026: a troca para Bruno que falha com 500 mostra a mensagem; a troca seguinte para Carla, bem-sucedida, esvazia a área de erro e mostra "Seguir" 
+    Error: expect(locator).toHaveCount(expected) failed
+    Locator:  getByRole('alert').filter({ hasText: /\S/ })
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+    Call log:
+      - Expect "toHaveCount" getByRole('alert').filter({ hasText: /\S/ }) with timeout 5000ms
+      - waiting for getByRole('alert').filter({ hasText: /\S/ })
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+      369 |   await expect(unfollowButton(page)).toHaveCount(0);
+      370 |   await expect(followerCount(page, '1 seguidor')).toBeVisible();
+    > 371 |   await expect(page.getByRole('alert').filter({ hasText: /\S/ })).toHaveCount(
+          |                                                                   ^
+      372 |     0,
+      373 |   );
+      374 | });
+        at /home/thiago-fernandes/Downloads/follow-creator-api/e2e/page-actions.spec.ts:371:67
+    Error Context: test-results/page-actions-FR-022-FR-026-9d0c9-ea-de-erro-e-mostra-Seguir--chromium/error-context.md
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/page-actions-FR-022-FR-026-9d0c9-ea-de-erro-e-mostra-Seguir--chromium/trace.zip
+    Usage:
+        npx playwright show-trace test-results/page-actions-FR-022-FR-026-9d0c9-ea-de-erro-e-mostra-Seguir--chromium/trace.zip
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+  4 failed
+    [chromium] › e2e/page-a11y.spec.ts:141:7 › FR-028 FR-029: depois de seguir com Enter o botão continua focado com aria-pressed true e um segundo Enter deixa de seguir, com o foco mantido e aria-pressed false 
+    [chromium] › e2e/page-a11y.spec.ts:141:7 › FR-028 FR-029: depois de seguir com Space o botão continua focado com aria-pressed true e um segundo Space deixa de seguir, com o foco mantido e aria-pressed false 
+    [chromium] › e2e/page-actions.spec.ts:235:5 › FR-022: trocar de Ana para Bruno enquanto o POST de Ana está retido deixa o botão "Seguir" com aria-pressed false para Bruno, coerente com a API 
+    [chromium] › e2e/page-actions.spec.ts:335:5 › FR-022 FR-026: a troca para Bruno que falha com 500 mostra a mensagem; a troca seguinte para Carla, bem-sucedida, esvazia a área de erro e mostra "Seguir" 
+  22 passed (38.0s)

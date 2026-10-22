@@ -1,0 +1,69 @@
+
+> follow-creator-api@0.0.1 verify
+> npm run lint && npm run build && npm run test:unit && npm run test:int && npm run test:e2e
+
+
+> follow-creator-api@0.0.1 lint
+> eslint "{src,tests,e2e}/**/*.ts" --max-warnings 0
+
+
+> follow-creator-api@0.0.1 build
+> nest build
+
+
+> follow-creator-api@0.0.1 test:unit
+> jest -c jest.unit.config.ts
+
+Test Suites: 1 passed, 1 total
+Tests:       20 passed, 20 total
+Snapshots:   0 total
+Time:        0.63 s, estimated 1 s
+Ran all test suites.
+
+> follow-creator-api@0.0.1 test:int
+> jest -c jest.int.config.ts --runInBand
+
+Test database rebuilt.
+
+Test Suites: 7 passed, 7 total
+Tests:       110 passed, 110 total
+Snapshots:   0 total
+Time:        3.445 s, estimated 4 s
+Ran all test suites.
+
+> follow-creator-api@0.0.1 test:e2e
+> playwright test
+
+Test database rebuilt.
+
+Running 26 tests using 1 worker
+
+  ✓   1 [chromium] › e2e/page-a11y.spec.ts:30:5 › FR-028: só com teclado, Tab foca "Você é", seta troca para Bruno, Tab chega ao botão e Enter segue (584ms)
+  ✓   2 [chromium] › e2e/page-a11y.spec.ts:58:5 › FR-028: só com teclado, Tab até o botão e Espaço segue (417ms)
+  ✓   3 [chromium] › e2e/page-a11y.spec.ts:79:5 › FR-029: o botão expõe aria-pressed false/true e a contagem fica numa região aria-live="polite" antes e depois de seguir (431ms)
+  ✓   4 [chromium] › e2e/page-a11y.spec.ts:112:7 › FR-030: em 375x812 nome, contagem, seletor e botão ficam visíveis sem rolagem horizontal (285ms)
+  ✓   5 [chromium] › e2e/page-a11y.spec.ts:112:7 › FR-030: em 1280x800 nome, contagem, seletor e botão ficam visíveis sem rolagem horizontal (327ms)
+  ✓   6 [chromium] › e2e/page-a11y.spec.ts:141:7 › FR-028 FR-029: depois de seguir com Enter o botão continua focado com aria-pressed true e um segundo Enter deixa de seguir, com o foco mantido e aria-pressed false (429ms)
+  ✓   7 [chromium] › e2e/page-a11y.spec.ts:141:7 › FR-028 FR-029: depois de seguir com Space o botão continua focado com aria-pressed true e um segundo Space deixa de seguir, com o foco mantido e aria-pressed false (371ms)
+  ✓   8 [chromium] › e2e/page-actions.spec.ts:17:5 › FR-019 FR-023: seguir troca o botão para "Deixar de seguir" e a contagem para "1 seguidor"; deixar de seguir volta a "Seguir" e "0 seguidores" (426ms)
+  ✓   9 [chromium] › e2e/page-actions.spec.ts:46:5 › FR-022 FR-023: trocar o usuário em "Você é" atualiza o botão e a ação vale para o usuário escolhido (417ms)
+  ✓  10 [chromium] › e2e/page-actions.spec.ts:80:5 › FR-025: duplo clique em "Seguir" envia um único POST e nenhum DELETE, com o botão desabilitado e aria-busy durante a ação (344ms)
+  ✓  11 [chromium] › e2e/page-actions.spec.ts:121:5 › FR-026: falha de rede no POST mostra a mensagem e mantém "0 seguidores" e "Seguir"; a ação seguinte limpa a mensagem (360ms)
+  ✓  12 [chromium] › e2e/page-actions.spec.ts:151:5 › FR-026: resposta 500 no POST mostra a mensagem e mantém "0 seguidores" e "Seguir" (316ms)
+  ✓  13 [chromium] › e2e/page-actions.spec.ts:178:5 › FR-026: resposta 500 no DELETE mostra a mensagem e mantém "1 seguidor" e "Deixar de seguir" (315ms)
+  ✓  14 [chromium] › e2e/page-actions.spec.ts:206:5 › FR-026: resposta 500 na releitura da contagem depois de um POST bem-sucedido mostra a mensagem e mantém "0 seguidores" e "Seguir" (340ms)
+  ✓  15 [chromium] › e2e/page-actions.spec.ts:235:5 › FR-022: trocar de Ana para Bruno enquanto o POST de Ana está retido deixa o botão "Seguir" com aria-pressed false para Bruno, coerente com a API (403ms)
+  ✓  16 [chromium] › e2e/page-actions.spec.ts:297:5 › FR-025: dois eventos click despachados na mesma tarefa sobre "Seguir" geram exatamente um POST e nenhum DELETE (324ms)
+  ✓  17 [chromium] › e2e/page-actions.spec.ts:335:5 › FR-022 FR-026: a troca para Bruno que falha com 500 mostra a mensagem; a troca seguinte para Carla, bem-sucedida, esvazia a área de erro e mostra "Seguir" (359ms)
+  ✓  18 [chromium] › e2e/page-load.spec.ts:13:5 › FR-019 FR-022 FR-023: estado inicial mostra Luna Prado, "0 seguidores", Ana selecionada em "Você é" e o botão "Seguir" (272ms)
+  ✓  19 [chromium] › e2e/page-load.spec.ts:34:5 › FR-020: ?creatorId=2 mostra Mel Duarte com "0 seguidores" e o botão "Seguir" (194ms)
+  ✓  20 [chromium] › e2e/page-load.spec.ts:45:5 › FR-020: ?creatorId= vazio usa a criadora 1 (Luna Prado) (189ms)
+  ✓  21 [chromium] › e2e/page-load.spec.ts:56:7 › FR-021: ?creatorId=999 mostra "Criadora não encontrada." sem seletor e sem botão (172ms)
+  ✓  22 [chromium] › e2e/page-load.spec.ts:56:7 › FR-021: ?creatorId=abc mostra "Criadora não encontrada." sem seletor e sem botão (167ms)
+  ✓  23 [chromium] › e2e/page-load.spec.ts:56:7 › FR-021: ?creatorId=0 mostra "Criadora não encontrada." sem seletor e sem botão (160ms)
+  ✓  24 [chromium] › e2e/page-load.spec.ts:56:7 › FR-021: ?creatorId=2147483648 mostra "Criadora não encontrada." sem seletor e sem botão (173ms)
+  ✓  25 [chromium] › e2e/page-load.spec.ts:70:5 › FR-027: mostra "Carregando…" sem botão enquanto os dados iniciais não chegam e o esconde quando chegam (214ms)
+  ✓  26 [chromium] › e2e/page-multi-user.spec.ts:11:5 › FR-024 FR-023: com Ana e Bruno na página vendo "0 seguidores", Ana segue e depois Bruno segue sem recarregar e vê "2 seguidores" (564ms)
+
+  26 passed (14.1s)
+exit=0

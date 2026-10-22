@@ -1,9 +1,9 @@
 # PROMPTS
 
 **Ferramenta usada:** Claude Code (com Spec Kit e subagentes)  
-**Autocompletar no editor:** [usei / não usei]  
-**Planejamento:** antes do projeto, usei o Claude (chat) para planejar a estratégia e redigir os prompts abaixo. [Informe o número de mensagens.] Os 5 prompts a seguir são a versão final dos que geraram o projeto (ver "Decisões que tomei" sobre as reexecuções).  
-**Tempo total:** [início, fim e duração; se passou de 2h, diga quanto]
+**Autocompletar no editor:** usei. Como foram poucos prompts, usei o autocompletar do editor, geralmente com aprovação manual de cada passo.  
+**Planejamento:** antes do projeto, usei o Claude (chat) para planejar a estratégia e redigir os prompts abaixo. Os 5 prompts a seguir são a versão final dos que geraram o projeto (ver "Decisões que tomei" sobre a revisão dos textos).  
+**Tempo total:** Total de 2 horas de duração. Sendo 30 minutos de planejamento, 1 hora de implementação e 30 minutos finais de correções.
 
 ## Prompt 1
 
@@ -137,7 +137,7 @@ Inclua a Definição de pronto de AGENTS.md.
 
 **O que a IA entregou:** O AGENTS.md, os três subagentes em `.claude/agents/` (qa-guardian, developer e reviewer) e a constituição v1.0.0 com os 9 princípios e a Definição de pronto, mais o `evidence/suposicoes.md`. O commit também inclui a inicialização do Spec Kit (`specify init`, feita por mim) e o `.gitignore`.
 
-**O que estava errado ou faltando, e o que você fez:** (1) Na versão 1.0.11 do Spec Kit os comandos se chamam `/speckit-constitution` (com hífen); com ponto não resolvem. Corrigi o PROMPTS.md. (2) O `/speckit-constitution` limita o próprio escopo à constituição, mas o prompt pedia também AGENTS.md e subagentes; mantive o pedido e registrei em `suposicoes.md`. (3) O Claude Code não carregou os subagentes novos nesta sessão; passei a rodar cada papel como agente genérico com o texto literal do arquivo do subagente. (4) O texto do prompt foi revisado antes da versão final (README e `docs/adr/` passaram a ser do developer; o hash dos testes passou a cobrir os configs), e o prompt foi executado de novo com o texto final.
+**O que estava errado ou faltando, e o que você fez:** (1) Na versão 1.0.11 do Spec Kit os comandos se chamam `/speckit-constitution` (com hífen); com ponto não resolvem. Corrigi o PROMPTS.md. (2) O `/speckit-constitution` limita o próprio escopo à constituição, mas o prompt pedia também AGENTS.md e subagentes; mantive o pedido e registrei em `suposicoes.md`. (3) O Claude Code não carregou os subagentes novos nesta sessão; passei a rodar cada papel como agente genérico com o texto literal do arquivo do subagente. (4) O texto do prompt foi revisado antes da versão final (README e `docs/adr/` passaram a ser do developer; o hash dos testes passou a cobrir os configs), e os arquivos gerados foram ajustados pela IA a partir do relatório, sem reenviar o prompt; o texto enviado foi a versão original, e o que está acima é a versão revisada.
 
 **Como você conferiu:**
 
@@ -313,7 +313,7 @@ research.md apenas lista e linka esses ADRs.
 
 **O que a IA entregou:** O `plan.md` com todas as decisões técnicas, o `research.md` (só lista os ADRs), `data-model.md`, os contratos HTTP e da página, o `quickstart.md` e os 5 ADRs em `docs/adr/`, mais 12 suposições registradas.
 
-**O que estava errado ou faltando, e o que você fez:** Os ADRs foram escritos já nesta fase, porque o `research.md` precisa linkar arquivos existentes; a tarefa de ADRs da fase 4 virou revisão. O texto do prompt foi revisado antes da versão final (onde o pipe e o filtro globais são registrados, proteção do banco de teste, ramos do service e dos testes) e o prompt foi executado de novo com o texto final.
+**O que estava errado ou faltando, e o que você fez:** Os ADRs foram escritos já nesta fase, porque o `research.md` precisa linkar arquivos existentes; a tarefa de ADRs da fase 4 virou revisão. O texto do prompt foi revisado antes da versão final (onde o pipe e o filtro globais são registrados, proteção do banco de teste, ramos do service e dos testes) e os arquivos gerados foram ajustados pela IA a partir do relatório, sem reenviar o prompt; o texto enviado foi a versão original, e o que está acima é a versão revisada.
 
 **Como você conferiu:**
 
@@ -345,7 +345,7 @@ Depois de gerar tasks.md, invoque o reviewer para auditar spec ↔ plan ↔ task
 
 **O que a IA entregou:** O `tasks.md` com 61 tarefas em 4 fases, cada uma com dono ([QA], [DEV] ou [REV]), testes antes da implementação, as 6 mutações e a tabela de cobertura dos 30 FRs; e o `evidence/analyze.md`, com a auditoria do reviewer sobre spec, plan e tasks.
 
-**O que estava errado ou faltando, e o que você fez:** O subagente `reviewer` não estava carregado na sessão; a auditoria foi feita por um agente genérico com o texto literal de `.claude/agents/reviewer.md`. O `analyze.md` lista os achados menores que ficaram. O texto do prompt foi revisado antes da versão final (ordem lint, red e hash; revisão por arquivos da fase) e o prompt foi executado de novo com o texto final.
+**O que estava errado ou faltando, e o que você fez:** O subagente `reviewer` não estava carregado na sessão; a auditoria foi feita por um agente genérico com o texto literal de `.claude/agents/reviewer.md`. O `analyze.md` lista os achados menores que ficaram. O texto do prompt foi revisado antes da versão final (ordem lint, red e hash; revisão por arquivos da fase) e os arquivos gerados foram ajustados pela IA a partir do relatório, sem reenviar o prompt; o texto enviado foi a versão original, e o que está acima é a versão revisada.
 
 **Como você conferiu:**
 
@@ -370,9 +370,9 @@ Ao final, rode npm run verify, salve a saída em evidence/verify.txt e entregue 
 
 **Por que este prompt:** Executar o plano com os agentes: red provado e salvo, implementação sem tocar nos testes, validação por hash e mutação, revisão independente, verify completo e relatório final honesto.
 
-**O que a IA entregou:** [preencher após executar, em 2 ou 3 linhas]
+**O que a IA entregou:** O projeto completo, por fases com os três papéis: setup (Nest, Docker, banco, esqueleto), a API (6 endpoints, SQL puro, concorrência garantida pelo banco), a página estática, 156 testes (20 unitários, 110 de integração e 26 E2E em Chromium), README, ADRs revisados e os relatórios em `specs/001-seguir-criadora/evidence/` (red, hash, mutações, revisões, `verify.txt` e `relatorio-final.md`).
 
-**O que estava errado ou faltando, e o que você fez:** [preencher após executar; cite o commit manual: de cada correção, ou "nada"]
+**O que estava errado ou faltando, e o que você fez:** (1) Os subagentes do projeto não foram carregados pela sessão do Claude Code; cada papel rodou como agente genérico com o texto literal do arquivo em `.claude/agents/`, então a divisão por papel é convenção, e o hash dos testes é a prova de que o developer não os tocou. (2) O qa-guardian achou um bug de build (`incremental` com `deleteOutDir` apagava `dist/` no segundo build); o developer corrigiu. (3) A revisão da API achou que erros 413 e 415 do body-parser viravam 500; o qa-guardian escreveu o teste que falhava e o developer corrigiu o filtro. (4) A revisão da página achou uma corrida ao trocar de usuário durante uma ação e a perda de foco do teclado depois de cada ação; o qa-guardian escreveu os testes que falhavam, o developer corrigiu a página e as mutações foram rodadas de novo. (5) Menores tratados pelo developer: pool com ouvinte de erro, stack no log do 500, lint sem avisos, dependências sem uso removidas e `USER node` no Dockerfile. Nenhuma edição manual de código. Ficaram abertos achados menores, listados nos relatórios de revisão.
 
 **Como você conferiu:**
 
@@ -385,7 +385,7 @@ Ao final, rode npm run verify, salve a saída em evidence/verify.txt e entregue 
 - `git log -p | grep -iE "password|secret|token"` e `git ls-files | grep "\.env$"` sem resultado
 - README seguido num clone limpo
 
-Resultado: [preencher após executar]
+Resultado: `npm run verify` termina com `exit=0` (lint, build, 20 unitários, 110 de integração e 26 E2E), conforme `evidence/verify.txt`. Os 30 FRs têm teste. As 9 mutações (a) a (i) morreram; (a) a (d) rodaram antes das mudanças finais no filtro, no pool e no DTO e não foram repetidas. O hash dos testes bate com os arquivos finais, mas foi regerado duas vezes por motivos documentados. Não conferi: `git log -p | grep` de segredos só no commit final, e o README seguido num clone limpo.
 
 ## Decisões que tomei
 
@@ -405,7 +405,7 @@ Detalhes em docs/adr/.
 - PostgreSQL e API no Docker Compose; testes rodam no host contra um banco de teste separado.
 - Página em HTML, CSS e JavaScript puro, sem framework.
 - Código sem comentários; identificadores em inglês; textos ao usuário e documentação em português.
-- Limite de 5 prompts tratado como teto, mas os prompts 1, 3 e 4 foram executados mais de uma vez depois de ajustes no texto, então o total de mensagens enviadas à IA passou de 5; o histórico guarda a versão final de cada prompt. A IA foi instruída a não fazer perguntas e a registrar suposições; aprovações de permissão do Claude Code e mensagens de configuração do repositório (instalação do Node 24 e do Spec Kit) não foram contadas como prompt.
+- Limite de 5 prompts tratado como teto: foram 5 prompts de tarefa, cada um enviado uma vez. Depois da auditoria do Prompt 4, os textos dos prompts 1, 3 e 4 foram revisados e os arquivos gerados foram ajustados pela IA, sem reenviar os prompts; o PROMPTS.md traz a versão revisada. A IA foi instruída a não fazer perguntas e a registrar suposições; aprovações de permissão do Claude Code e mensagens de configuração do repositório (instalação do Node 24 e do Spec Kit) não foram contadas como prompt.
 - specs/, .specify/, .claude/agents/ e AGENTS.md versionados, para mostrar o contexto e as restrições passados à IA.
 
 ## O que não verifiquei
@@ -414,4 +414,7 @@ Detalhes em docs/adr/.
 - Desempenho e comportamento sob carga real.
 - Navegadores além do Chromium e dispositivos móveis reais.
 - Que só o qa-guardian escreveu os testes: é convenção, não bloqueio técnico; a evidência é o hash e os relatórios em specs/001-seguir-criadora/evidence/.
-- [outros, após executar]
+- Os papéis (qa-guardian, developer e reviewer) rodaram como agentes genéricos; a revisão final das correções da página e da Fase 4 não foi repetida pelo reviewer.
+- Falha não-404 no carregamento inicial da página e foco do teclado depois de uma ação que falha não têm teste E2E.
+- Mutações (a) a (d) depois das últimas mudanças em `src/`.
+- README seguido num clone limpo, e a API do compose com reinício automático após queda do Postgres.

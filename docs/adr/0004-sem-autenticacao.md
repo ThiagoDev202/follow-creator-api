@@ -11,7 +11,7 @@ autenticação está fora do escopo do desafio.
 ## Decisão
 
 O `userId` é confiado ao cliente, como pede o enunciado. A página escolhe o usuário num seletor
-"Você é".
+"Você é"; a escolha vale só na página e é enviada a cada ação, no corpo do POST e na rota do DELETE e das leituras.
 
 ## Alternativas
 

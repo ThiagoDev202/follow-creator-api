@@ -31,3 +31,4 @@ ser fácil de revisar.
 - O SQL fica explícito e revisável no repository.
 - Os testes de integração precisam de um Postgres rodando (o do compose).
 - A página não tem build: o que está em `public/` é o que roda.
+- O `npm run verify` encadeia lint (sem warnings), build, testes unitários, de integração e E2E.
